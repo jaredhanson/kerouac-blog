@@ -2,7 +2,7 @@
 
 This is a [Kerouac](https://github.com/jaredhanson/kerouac) plugin for writing
 and publishing a blog, including [RSS](http://en.wikipedia.org/wiki/RSS) and
-[Atom](http://en.wikipedia.org/wiki/Atom_(standard)) feeds.
+[Atom](http://en.wikipedia.org/wiki/Atom_%28standard%29) feeds.
 
 ## Install
 
