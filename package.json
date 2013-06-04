@@ -21,6 +21,7 @@
   } ],
   "main": "./lib",
   "dependencies": {
+    "kerouac": "0.0.x",
     "xmlbuilder": "0.4.x"
   },
   "devDependencies": {
