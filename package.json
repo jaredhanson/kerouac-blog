@@ -2,7 +2,16 @@
   "name": "kerouac-blog",
   "version": "0.0.1",
   "description": "Blog plugin for Kerouac.",
-  "keywords": ["blog", "rss", "atom"],
+  "keywords": [
+    "blog",
+    "rss",
+    "atom"
+  ],
+  "author": {
+    "name": "Jared Hanson",
+    "email": "jaredhanson@gmail.com",
+    "url": "http://www.jaredhanson.net/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/jaredhanson/kerouac-blog.git"
@@ -10,26 +19,27 @@
   "bugs": {
     "url": "http://github.com/jaredhanson/kerouac-blog/issues"
   },
-  "author": {
-    "name": "Jared Hanson",
-    "email": "jaredhanson@gmail.com",
-    "url": "http://www.jaredhanson.net/"
-  },
-  "licenses": [ {
-    "type": "MIT",
-    "url": "http://www.opensource.org/licenses/MIT" 
-  } ],
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
   "main": "./lib",
   "dependencies": {
     "kerouac": "0.0.x",
     "xmlbuilder": "0.4.x"
   },
   "devDependencies": {
+    "make-node": "0.3.x",
     "mocha": "1.x.x",
     "chai": "1.x.x"
   },
+  "engines": {
+    "node": ">= 0.6.0"
+  },
   "scripts": {
     "test": "NODE_PATH=./lib node_modules/.bin/mocha --reporter spec --require test/node/bootstrap test/*.test.js"
-  },
-  "engines": { "node": ">= 0.6.0" }
+  }
 }
