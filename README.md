@@ -31,3 +31,7 @@ blog's articles.
 [The MIT License](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2013 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
+
+<a target='_blank' rel='nofollow' href='http://app.codesponsor.io/link/vK9dyjRnnWsMzzJTQ57fRJpH/jaredhanson/kerouac-blog'>
+  <img alt='Sponsor' width='888' height='68' src='http://app.codesponsor.io/embed/vK9dyjRnnWsMzzJTQ57fRJpH/jaredhanson/kerouac-blog.svg' />
+</a>
