@@ -20,9 +20,15 @@ describe('kerouac-blog', function() {
     it('should queue pages', function() {
       var path;
       
-      expect(queue._q).to.have.length(1);
+      expect(queue._q).to.have.length(2);
       
       path = queue._q[0].split('/');
+      expect(path[1]).to.have.length(4); // year
+      expect(path[2]).to.have.length(2); // month
+      expect(path[3]).to.have.length(2); // day
+      expect(path[4]).to.equal('hello-again.html'); // slug
+      
+      path = queue._q[1].split('/');
       expect(path[1]).to.have.length(4); // year
       expect(path[2]).to.have.length(2); // month
       expect(path[3]).to.have.length(2); // day

@@ -14,7 +14,7 @@ describe('handlers/feed/rss', function() {
         .page(function(page) {
           page.site = site;
           page.pages = [
-            { url: '/blog/hello/',
+            { url: '/blog/2017/09/03/hello/',
               post: true,
               title: 'Hello, World' }
           ];
@@ -33,7 +33,7 @@ describe('handlers/feed/rss', function() {
         '  <channel>',
         '    <item>',
         '      <title>Hello, World</title>',
-        '      <link>/blog/hello/</link>',
+        '      <link>/blog/2017/09/03/hello/</link>',
         '    </item>',
         '  </channel>',
         '</rss>',
