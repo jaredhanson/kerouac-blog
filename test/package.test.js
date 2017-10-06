@@ -1,13 +1,33 @@
 /* global describe, it */
 
-var pkg = require('..');
-var expect = require('chai').expect;
+var blog = require('..');
+var Queue = require('./stubs/queue');
 
 
 describe('kerouac-blog', function() {
   
-  it('should export hello world', function() {
-    //expect(pkg.hello).to.equal('world');
+  describe('binding to directory with posts named using bare slugs', function() {
+    var site = blog('test/fixtures/bare');
+    var queue = new Queue();
+    
+    before(function(done) {
+      site._blocks[0].call(queue, function(err) {
+        if (err) { return done(err); }
+        return done();
+      });
+    });
+    
+    it('should queue pages', function() {
+      var path;
+      
+      expect(queue._q).to.have.length(1);
+      
+      path = queue._q[0].split('/');
+      expect(path[1]).to.have.length(4); // year
+      expect(path[2]).to.have.length(2); // month
+      expect(path[3]).to.have.length(2); // day
+      expect(path[4]).to.equal('hello.html'); // slug
+    });
   });
   
 });
