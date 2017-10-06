@@ -1,33 +1,46 @@
 var chai = require('chai');
+var kerouac = require('kerouac')
 var handler = require('../../lib/handlers/post');
 
 
 describe('handlers/post', function() {
+  var site = kerouac();
   
-  describe.only('with one page', function() {
-    var page, err;
+  describe('with posts named using bare slugs', function() {
+    var page, layout, err;
 
     before(function(done) {
-      chai.kerouac.handler(handler())
+      chai.kerouac.handler(handler('test/fixtures/bare'))
         .page(function(page) {
+          page.site = site;
           page.params = { slug: 'hello' };
         })
-        .end(function(p) {
+        .render(function(p, l) {
           page = p;
+          layout = l;
           done();
         })
         .dispatch();
     });
   
-    it('should have correct body', function() {
-      var expected = 'TODO: BLOG ENTRY! hello';
-      
-      expect(page.body).to.equal(expected);
+    it('should set metadata', function() {
+      expect(page.post).to.equal(true);
+      expect(page.title).to.equal('Hello, World');
+    });
+  
+    it('should set markup', function() {
+      expect(page.markup).to.equal('md');
+      expect(page.content).to.contain('This post was written using Markdown.');
+    });
+  
+    it('should render with locals', function() {
+      expect(page.locals.title).to.equal('Hello, World');
+      expect(page.locals.content).to.equal('<p>This post was written using Markdown.</p>\n');
     });
     
-    it('should set sitemap property', function() {
-      //expect(page.sitemap).to.equal(true);
+    it('should render layout', function() {
+      expect(layout).to.equal(undefined);
     });
-  }); // with one page
+  }); // with posts named using bare slugs
   
 });
