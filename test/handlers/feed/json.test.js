@@ -36,6 +36,7 @@ describe('handlers/feed/json', function() {
         '  "feed_url": "/blog/feed.json",',
         '  "items": [',
         '    {',
+        '      "id": "/blog/2017/09/03/hello/",',
         '      "title": "Hello, World",',
         '      "url": "/blog/2017/09/03/hello/"',
         '    }',
