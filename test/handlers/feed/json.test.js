@@ -29,7 +29,7 @@ describe('handlers/feed/json', function() {
         .dispatch();
     });
   
-    it('should write feed', function() {
+    it.only('should write feed', function() {
       var expected = [
         '{',
         '  "version": "https://jsonfeed.org/version/1",',
@@ -38,7 +38,8 @@ describe('handlers/feed/json', function() {
         '    {',
         '      "id": "/blog/2017/09/03/hello/",',
         '      "title": "Hello, World",',
-        '      "url": "/blog/2017/09/03/hello/"',
+        '      "url": "/blog/2017/09/03/hello/",',
+        '      "date_published": "2017-09-03T17:30:15Z"',
         '    }',
         '  ]',
         '}'
