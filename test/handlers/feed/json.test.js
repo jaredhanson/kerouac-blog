@@ -29,7 +29,7 @@ describe('handlers/feed/json', function() {
         .dispatch();
     });
   
-    it.only('should write feed', function() {
+    it('should write feed', function() {
       var expected = [
         '{',
         '  "version": "https://jsonfeed.org/version/1",',
