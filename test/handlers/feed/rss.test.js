@@ -16,7 +16,8 @@ describe('handlers/feed/rss', function() {
           page.pages = [
             { url: '/blog/2017/09/03/hello/',
               post: true,
-              title: 'Hello, World' }
+              title: 'Hello, World',
+              createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)) }
           ];
         })
         .end(function(p) {
@@ -34,6 +35,7 @@ describe('handlers/feed/rss', function() {
         '    <item>',
         '      <title>Hello, World</title>',
         '      <link>/blog/2017/09/03/hello/</link>',
+        '      <pubDate>Sun, 03 Sep 2017 17:30:15 GMT</pubDate>',
         '    </item>',
         '  </channel>',
         '</rss>',
