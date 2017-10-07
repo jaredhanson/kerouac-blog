@@ -27,7 +27,7 @@ describe('handlers/feed/rss', function() {
         .dispatch();
     });
   
-    it('should write sitemap.xml', function() {
+    it('should write feed', function() {
       var expected = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<rss version=\"2.0\">',
