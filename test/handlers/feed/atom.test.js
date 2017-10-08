@@ -13,8 +13,9 @@ describe('handlers/feed/atom', function() {
       chai.kerouac.handler(handler())
         .page(function(page) {
           page.site = site;
-          page.pages = [
+          page.site.pages = [
             { url: '/blog/2017/09/03/hello/',
+              fullURL: 'http://www.example.com/blog/2017/09/03/hello/',
               post: true,
               title: 'Hello, World',
               createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)) }
@@ -33,7 +34,7 @@ describe('handlers/feed/atom', function() {
         '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
         '  <entry>',
         '    <title>Hello, World</title>',
-        '    <link href=\"/blog/2017/09/03/hello/\"/>',
+        '    <link href=\"http://www.example.com/blog/2017/09/03/hello/\"/>',
         '    <published>2017-09-03T17:30:15Z</published>',
         '  </entry>',
         '</feed>',
