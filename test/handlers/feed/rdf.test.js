@@ -13,8 +13,9 @@ describe('handlers/feed/rdf', function() {
       chai.kerouac.handler(handler())
         .page(function(page) {
           page.site = site;
-          page.pages = [
+          page.site.pages = [
             { url: '/blog/2017/09/03/hello/',
+              fullURL: 'http://www.example.com/blog/2017/09/03/hello/',
               post: true,
               title: 'Hello, World',
               createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)) }
@@ -34,7 +35,7 @@ describe('handlers/feed/rdf', function() {
         '  <channel/>',
         '  <item>',
         '    <title>Hello, World</title>',
-        '    <link>/blog/2017/09/03/hello/</link>',
+        '    <link>http://www.example.com/blog/2017/09/03/hello/</link>',
         '    <dc:date>2017-09-03T17:30:15Z</dc:date>',
         '  </item>',
         '</rdf:RDF>',
