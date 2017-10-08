@@ -13,10 +13,12 @@ describe('handlers/feed/json', function() {
       chai.kerouac.handler(handler())
         .page(function(page) {
           page.url = '/blog/feed.json';
+          page.fullURL = 'http://www.example.com/blog/feed.json';
           
           page.site = site;
-          page.pages = [
+          page.site.pages = [
             { url: '/blog/2017/09/03/hello/',
+              fullURL: 'http://www.example.com/blog/2017/09/03/hello/',
               post: true,
               title: 'Hello, World',
               createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)) }
@@ -33,12 +35,12 @@ describe('handlers/feed/json', function() {
       var expected = [
         '{',
         '  "version": "https://jsonfeed.org/version/1",',
-        '  "feed_url": "/blog/feed.json",',
+        '  "feed_url": "http://www.example.com/blog/feed.json",',
         '  "items": [',
         '    {',
-        '      "id": "/blog/2017/09/03/hello/",',
+        '      "id": "http://www.example.com/blog/2017/09/03/hello/",',
         '      "title": "Hello, World",',
-        '      "url": "/blog/2017/09/03/hello/",',
+        '      "url": "http://www.example.com/blog/2017/09/03/hello/",',
         '      "date_published": "2017-09-03T17:30:15Z"',
         '    }',
         '  ]',
