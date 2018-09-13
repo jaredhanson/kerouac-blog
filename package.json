@@ -1,7 +1,7 @@
 {
   "name": "kerouac-blog",
   "version": "0.0.1",
-  "description": "Blog plugin for Kerouac.",
+  "description": "Kerouac app that generates a blog section of a site.",
   "keywords": [
     "blog",
     "rss",
