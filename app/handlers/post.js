@@ -4,12 +4,33 @@ var fs = require('fs')
   , utils = require('../utils');
 
 
-exports = module.exports = function(dir, layout) {
+exports = module.exports = function(postsDB) {
   var dir = 'blog'
     , layout;
   
   
   var exts = [ '.md' ];
+  
+  
+  function loadPost(page, next) {
+    console.log('LOAD!')
+    console.log(page);
+    console.log(page.params);
+    
+    var q = {
+      slug: page.params.slug,
+      year: page.params.year,
+      month: page.params.month,
+      day: page.params.day
+    }
+    
+    postsDB.read(q, function(err, post) {
+      console.log(err);
+      console.log(post);
+      
+      next();
+    });
+  }
   
   
   function findFile(page, next) {
@@ -41,6 +62,7 @@ exports = module.exports = function(dir, layout) {
   return [
     kerouac.manifest(),
     kerouac.canonicalURL(),
+    loadPost,
     findFile,
     kerouac.timestamps(),
     kerouac.layout(layout),
@@ -50,4 +72,6 @@ exports = module.exports = function(dir, layout) {
   ];
 };
 
-exports['@require'] = [];
+exports['@require'] = [
+  'http://i.kerouacjs.org/blog/PostsDatabase'
+];
