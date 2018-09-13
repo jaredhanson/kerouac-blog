@@ -1,7 +1,3 @@
-var builder = require('xmlbuilder')
-  , linkto = require('../../utils').linkto;
-
-
 /**
  * JSON Feed middleware.
  *
@@ -32,6 +28,8 @@ var builder = require('xmlbuilder')
  *   - https://news.ycombinator.com/item?id=14360729
  */
 exports = module.exports = function() {
+  var linkto = require('../../utils').linkto;
+  
   
   return function feed(page, next) {
     var site = page.site

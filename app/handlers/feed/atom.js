@@ -1,7 +1,3 @@
-var builder = require('xmlbuilder')
-  , linkto = require('../../utils').linkto;
-
-
 /**
  * Atom middleware.
  *
@@ -17,6 +13,9 @@ var builder = require('xmlbuilder')
  *   - [Atom (standard)](https://en.wikipedia.org/wiki/Atom_(standard))
  */
 exports = module.exports = function() {
+  var builder = require('xmlbuilder')
+    , linkto = require('../../utils').linkto;
+  
   
   return function atom(page, next) {
     var site = page.site

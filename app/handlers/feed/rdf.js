@@ -1,7 +1,3 @@
-var builder = require('xmlbuilder')
-  , linkto = require('../../utils').linkto;
-
-
 /**
  * RSS middleware.
  *
@@ -22,6 +18,9 @@ var builder = require('xmlbuilder')
  *   - [History of web syndication technology](https://en.wikipedia.org/wiki/History_of_web_syndication_technology)
  */
 exports = module.exports = function() {
+  var builder = require('xmlbuilder')
+    , linkto = require('../../utils').linkto;
+  
   
   // TODO: Implement support for mod_enclosure
   //       https://foz.home.xs4all.nl/mod_enclosure.html
