@@ -1,52 +1,25 @@
 /* global describe, it */
 
-//var blog = require('..');
-var Queue = require('./stubs/queue');
+var expect = require('chai').expect;
 
-/*
+
 describe('kerouac-blog', function() {
   
-  describe('binding to directory with posts named using dates and slugs', function() {
-    var site = blog('test/fixtures/date');
-    var queue = new Queue();
+  describe('package.json', function() {
+    var json = require('../package.json');
     
-    before(function(done) {
-      site._blocks[0].call(queue, function(err) {
-        if (err) { return done(err); }
-        return done();
-      });
-    });
-    
-    it('should queue pages', function() {
-      expect(queue._q).to.have.length(2);
-      expect(queue._q).to.include('/2017/09/03/hello.html');
-      expect(queue._q).to.include('/2017/09/04/hello-again.html');
+    it('should have assembly metadata', function() {
+      expect(json.assembly.namespace).to.equal('org.kerouacjs/blog');
+      
+      expect(json.assembly.components).to.have.length(1);
+      expect(json.assembly.components).to.include('site');
     });
   });
   
-  describe('binding to directory with posts named using bare slugs', function() {
-    var site = blog('test/fixtures/bare');
-    var queue = new Queue();
-    
-    before(function(done) {
-      site._blocks[0].call(queue, function(err) {
-        if (err) { return done(err); }
-        return done();
-      });
-    });
-    
-    it('should queue pages', function() {
-      var path;
-      
-      expect(queue._q).to.have.length(1);
-      
-      path = queue._q[0].split('/');
-      expect(path[1]).to.have.length(4); // year
-      expect(path[2]).to.have.length(2); // month
-      expect(path[3]).to.have.length(2); // day
-      expect(path[4]).to.equal('hello.html'); // slug
-    });
+  it('should throw if required', function() {
+    expect(function() {
+      var pkg = require('..');
+    }).to.throw(Error).with.property('code', 'MODULE_NOT_FOUND');
   });
   
 });
-*/
