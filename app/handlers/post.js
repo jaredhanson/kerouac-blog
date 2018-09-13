@@ -5,6 +5,10 @@ var fs = require('fs')
 
 
 exports = module.exports = function(dir, layout) {
+  var dir = 'blog'
+    , layout;
+  
+  
   var exts = [ '.md' ];
   
   
@@ -45,3 +49,5 @@ exports = module.exports = function(dir, layout) {
     kerouac.render()
   ];
 };
+
+exports['@require'] = [];

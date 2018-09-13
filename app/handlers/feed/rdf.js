@@ -68,3 +68,5 @@ exports = module.exports = function() {
     page.end();
   };
 };
+
+exports['@require'] = [];

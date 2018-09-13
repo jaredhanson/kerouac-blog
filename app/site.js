@@ -8,7 +8,9 @@ var kerouac = require('kerouac')
 var DASHED_REGEX = /^(\d+)-(\d+)-(\d+)-(.*)/;
 
 
-exports = module.exports = function() {
+exports = module.exports = function(
+  postHandler,
+  atomFeed, rssFeed, rdfFeed, jsonFeed) {
   
   var dir, options;
   
@@ -30,16 +32,16 @@ exports = module.exports = function() {
   });
   
   
-  site.page('/:year/:month/:day/:slug.html', require('./handlers/post')(dir, options.layout));
+  site.page('/:year/:month/:day/:slug.html', postHandler);
   // FIXME: pretty URL isn't catching this
   //site.page('/index.html', require('./handlers/index')(options.layout));
   
   // https://github.com/jshttp/mime-db
   // https://help.github.com/articles/mime-types-on-github-pages/
-  site.page('/feed.atom', require('./handlers/feed/atom')());
-  site.page('/feed.rss', require('./handlers/feed/rss')());
-  site.page('/feed.rdf', require('./handlers/feed/rdf')());
-  site.page('/feed.json', require('./handlers/feed/json')());
+  site.page('/feed.atom', atomFeed);
+  site.page('/feed.rss', rssFeed);
+  site.page('/feed.rdf', rdfFeed);
+  site.page('/feed.json', jsonFeed);
   
   // TODO: implement a news-specific sitemap:
   //       https://support.google.com/webmasters/answer/74288
@@ -105,4 +107,10 @@ exports['@implements'] = [
   'http://i.kerouacjs.org/Site',
   'http://i.kerouacjs.org/blog/Site'
 ];
-exports['@require'] = [];
+exports['@require'] = [
+  './handlers/post',
+  './handlers/feed/atom',
+  './handlers/feed/rss',
+  './handlers/feed/rdf',
+  './handlers/feed/json'
+];
