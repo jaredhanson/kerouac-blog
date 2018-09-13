@@ -8,7 +8,10 @@ var kerouac = require('kerouac')
 var DASHED_REGEX = /^(\d+)-(\d+)-(\d+)-(.*)/;
 
 
-exports = module.exports = function(dir, options) {
+exports = module.exports = function() {
+  
+  var dir, options;
+  
   if (typeof dir == 'object') {
     options = dir;
     dir = options.dir;
@@ -97,3 +100,9 @@ exports = module.exports = function(dir, options) {
   
   return site;
 }
+
+exports['@implements'] = [
+  'http://i.kerouacjs.org/Site',
+  'http://i.kerouacjs.org/blog/Site'
+];
+exports['@require'] = [];
