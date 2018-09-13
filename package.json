@@ -30,7 +30,8 @@
   "assembly": {
     "namespace": "org.kerouacjs/blog",
     "components": [
-      "site"
+      "site",
+      "db/posts"
     ]
   },
   "dependencies": {

@@ -10,7 +10,8 @@ var DASHED_REGEX = /^(\d+)-(\d+)-(\d+)-(.*)/;
 
 exports = module.exports = function(
   postHandler,
-  atomFeed, rssFeed, rdfFeed, jsonFeed) {
+  atomFeed, rssFeed, rdfFeed, jsonFeed,
+  postsDB) {
   
   var dir, options;
   
@@ -52,6 +53,29 @@ exports = module.exports = function(
   site.bind(function(done) {
     var self = this;
     
+    postsDB.list(function(err, posts) {
+      if (err) { return done(err); }
+      
+      var el, i, len
+        , url, year, month, day, slug;
+      
+      for (i = 0, len = posts.length; i < len; ++i) {
+        el = posts[i];
+        year = el.createdAt.getUTCFullYear()
+        month = (el.createdAt.getUTCMonth() + 1)
+        day = el.createdAt.getUTCDate()
+        slug = el.slug;
+        
+        url = '/' + [ year, month, day, slug + '.html' ].join('/');
+        self.add(url);
+      }
+      
+      done();
+    });
+    
+    return;
+    
+    
     fs.readdir(dir, function(err, files) {
       if (err && err.code == 'ENOENT') {
         return done();
@@ -72,6 +96,9 @@ exports = module.exports = function(
         file = path.join(dir, file);
         ext = path.extname(file);
         base = path.basename(file, ext);
+        
+        console.log('GOT FILE!');
+        console.log(file);
         
         fs.stat(file, function(err, stats) {
           if (err) { return iter(err); }
@@ -112,5 +139,6 @@ exports['@require'] = [
   './handlers/feed/atom',
   './handlers/feed/rss',
   './handlers/feed/rdf',
-  './handlers/feed/json'
+  './handlers/feed/json',
+  'http://i.kerouacjs.org/blog/PostsDatabase'
 ];
