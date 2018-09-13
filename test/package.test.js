@@ -1,9 +1,9 @@
 /* global describe, it */
 
-var blog = require('..');
+//var blog = require('..');
 var Queue = require('./stubs/queue');
 
-
+/*
 describe('kerouac-blog', function() {
   
   describe('binding to directory with posts named using dates and slugs', function() {
@@ -49,3 +49,4 @@ describe('kerouac-blog', function() {
   });
   
 });
+*/

@@ -1,6 +1,6 @@
 var chai = require('chai');
 var kerouac = require('kerouac')
-var handler = require('../../../lib/handlers/feed/atom');
+var handler = require('../../../app/handlers/feed/atom');
 
 
 describe('handlers/feed/atom', function() {
