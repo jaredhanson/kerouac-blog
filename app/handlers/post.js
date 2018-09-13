@@ -13,10 +13,6 @@ exports = module.exports = function(postsDB) {
   
   
   function loadPost(page, next) {
-    console.log('LOAD!')
-    console.log(page);
-    console.log(page.params);
-    
     var q = {
       slug: page.params.slug,
       year: page.params.year,
@@ -25,8 +21,10 @@ exports = module.exports = function(postsDB) {
     }
     
     postsDB.read(q, function(err, post) {
-      console.log(err);
-      console.log(post);
+      page.locals.title = post.title;
+      page.locals.createdAt = post.createdAt;
+      page.locals.modifiedAt = post.modifiedAt;
+      page.content = post.content;
       
       next();
     });
@@ -63,10 +61,10 @@ exports = module.exports = function(postsDB) {
     kerouac.manifest(),
     kerouac.canonicalURL(),
     loadPost,
-    findFile,
-    kerouac.timestamps(),
+    //findFile,
+    //kerouac.timestamps(),
     kerouac.layout(layout),
-    kerouac.loadContent(),
+    //kerouac.loadContent(),
     meta,
     kerouac.render()
   ];
