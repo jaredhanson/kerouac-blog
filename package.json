@@ -26,7 +26,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "./lib",
+  "main": "./app",
   "dependencies": {
     "kerouac": "0.0.x",
     "xmlbuilder": "0.4.x"
