@@ -20,7 +20,7 @@ exports = module.exports = function(postsDB) {
       day: page.params.day
     }
     
-    postsDB.read(q, function(err, post) {
+    postsDB.find(q, function(err, post) {
       page.locals.title = post.title;
       page.locals.createdAt = post.createdAt;
       page.locals.modifiedAt = post.modifiedAt;
