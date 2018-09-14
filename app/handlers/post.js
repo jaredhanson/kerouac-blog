@@ -1,16 +1,8 @@
-var fs = require('fs')
-  , path = require('path')
-  , kerouac = require('kerouac')
+var kerouac = require('kerouac')
   , utils = require('../utils');
 
 
 exports = module.exports = function(postsDB) {
-  var dir = 'blog'
-    , layout;
-  
-  
-  var exts = [ '.md' ];
-  
   
   function loadPost(page, next) {
     var q = {
@@ -30,23 +22,6 @@ exports = module.exports = function(postsDB) {
     });
   }
   
-  
-  function findFile(page, next) {
-    var file, ext
-      , i, len;
-    
-    for (i = 0, len = exts.length; i < len; ++i) {
-      ext = exts[i];
-      file = path.resolve(dir, page.params.slug + ext);
-      if (fs.existsSync(file)) {
-        page.inputPath = file;
-        return next();
-      }
-    }
-    
-    return next('route');
-  }
-  
   function meta(page, next) {
     page.locals.createdAt = page.createdAt;
     
@@ -58,13 +33,7 @@ exports = module.exports = function(postsDB) {
   
   
   return [
-    kerouac.manifest(),
-    kerouac.canonicalURL(),
     loadPost,
-    //findFile,
-    //kerouac.timestamps(),
-    kerouac.layout(layout),
-    //kerouac.loadContent(),
     meta,
     kerouac.render()
   ];
