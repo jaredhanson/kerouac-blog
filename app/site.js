@@ -33,12 +33,14 @@ exports = module.exports = function(
   });
   
   
+  // HTML pages
   site.page('/:year/:month/:day/:slug.html', postHandler);
   // FIXME: pretty URL isn't catching this
   //site.page('/index.html', require('./handlers/index')(options.layout));
   
   // https://github.com/jshttp/mime-db
   // https://help.github.com/articles/mime-types-on-github-pages/
+  // Feeds
   site.page('/feed.atom', atomFeed);
   site.page('/feed.rss', rssFeed);
   site.page('/feed.rdf', rdfFeed);

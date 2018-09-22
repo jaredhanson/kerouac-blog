@@ -16,6 +16,7 @@
  *   - [RSS-DEV Working Group](https://en.wikipedia.org/wiki/RSS-DEV_Working_Group)
  *   - [RSS Specifications](http://www.rss-specifications.com/)
  *   - [History of web syndication technology](https://en.wikipedia.org/wiki/History_of_web_syndication_technology)
+ *   - [The Rise and Demise of RSS](https://twobithistory.org/2018/09/16/the-rise-and-demise-of-rss.html)
  */
 exports = module.exports = function() {
   var builder = require('xmlbuilder')
@@ -29,12 +30,12 @@ exports = module.exports = function() {
     var site = page.site
       , pages, post, item, val, i, len;
     
-    var rss = builder.create('rdf:RDF', { version: '1.0', encoding: 'UTF-8' });
-    rss.a('xmlns', 'http://purl.org/rss/1.0/')
-    rss.a('xmlns:rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
-    rss.a('xmlns:dc', 'http://purl.org/dc/elements/1.1/')
+    var rdf = builder.create('rdf:RDF', { version: '1.0', encoding: 'UTF-8' });
+    rdf.a('xmlns', 'http://purl.org/rss/1.0/')
+    rdf.a('xmlns:rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+    rdf.a('xmlns:dc', 'http://purl.org/dc/elements/1.1/')
     
-    var chan = rss.e('channel');
+    var chan = rdf.e('channel');
     
     val = site.get('title');
     if (val) {
@@ -56,13 +57,13 @@ exports = module.exports = function() {
     for (i = 0, len = pages.length; i < len; i++) {
       post = pages[i];
     
-      item = rss.e('item');
+      item = rdf.e('item');
       if (post.title) { item.e('title', post.title); }
       if (post.url) { item.e('link', linkto(page, post)); }
       if (post.createdAt) { item.e('dc:date', post.createdAt.toISOString().substring(0,19)+'Z'); }
     };
     
-    var xml = rss.end({ pretty: true });
+    var xml = rdf.end({ pretty: true });
     page.write(xml);
     page.end();
   };

@@ -16,6 +16,7 @@
  *   - [RSS](https://en.wikipedia.org/wiki/RSS)
  *   - [RSS Specifications](http://www.rss-specifications.com/)
  *   - [History of web syndication technology](https://en.wikipedia.org/wiki/History_of_web_syndication_technology)
+ *   - [The Rise and Demise of RSS](https://twobithistory.org/2018/09/16/the-rise-and-demise-of-rss.html)
  */
 exports = module.exports = function() {
   var builder = require('xmlbuilder')
