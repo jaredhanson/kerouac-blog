@@ -31,8 +31,8 @@ describe('handlers/post', function() {
         sinon.stub(postsDB, 'find').yields(null, {
           title: 'Hello, World',
           content: 'This post was written using Markdown.',
-          publishedAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)),
-          modifiedAt: new Date(Date.UTC(2017, 8, 3, 17, 32, 15))
+          publishedAt: new Date(Date.UTC(2003, 11, 13, 18, 30, 2)),
+          modifiedAt: new Date(Date.UTC(2005, 6, 31, 12, 29, 29))
         });
       });
     
@@ -71,21 +71,17 @@ describe('handlers/post', function() {
         });
       });
       
-      /*
-      it('should set metadata', function() {
-        expect(page.post).to.equal(true);
-        expect(page.title).to.equal('Hello, World');
+      it('should set locals', function() {
+        expect(page.locals).to.deep.equal({
+          title: 'Hello, World',
+          content: '<p>This post was written using Markdown.</p>\n',
+          publishedAt: new Date('2003-12-13T18:30:02Z'),
+          modifiedAt: new Date('2005-07-31T12:29:29Z')
+        });
       });
-      */
       
-      it('should set markup', function() {
-        //expect(page.markup).to.equal('md');
+      it('should set content', function() {
         expect(page.content).to.contain('This post was written using Markdown.');
-      });
-      
-      it('should render with locals', function() {
-        expect(page.locals.title).to.equal('Hello, World');
-        expect(page.locals.content).to.equal('<p>This post was written using Markdown.</p>\n');
       });
       
       it('should render layout', function() {

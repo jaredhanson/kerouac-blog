@@ -40,11 +40,17 @@ exports = module.exports = function(postsDB) {
     next();
   }
   
+  function prerender(page, next) {
+    page.layout = 'blog/post';
+    next();
+  }
+  
   
   return [
     initialize,
     loadPost,
     //meta,
+    prerender,
     kerouac.render()
   ];
 };
