@@ -54,16 +54,16 @@ exports = module.exports = function() {
     posts = site.pages.filter(function(p) {
       // Filter the set of pages to just those that are blog posts, as indicated
       // by the `post` property.
-      return p.post == true;
+      return (p.meta && p.meta.post == true);
     });
     
     for (i = 0, len = posts.length; i < len; i++) {
       post = posts[i];
     
       item = chan.e('item');
-      if (post.title) { item.e('title', post.title); }
-      if (post.url) { item.e('link', linkto(post, page)); }
-      if (post.createdAt) { item.e('pubDate', post.createdAt.toUTCString()); }
+      if (post.locals.title) { item.e('title', post.locals.title); }
+      item.e('link', linkto(post, page));
+      if (post.locals.publishedAt) { item.e('pubDate', post.locals.publishedAt.toUTCString()); }
     };
     
     var xml = rss.end({ pretty: true });

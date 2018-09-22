@@ -25,11 +25,14 @@ describe('handlers/feed/rss', function() {
           .page(function(page) {
             page.site = site;
             page.site.pages = [
-              { url: '/blog/2017/09/03/hello/',
-                fullURL: 'http://www.example.com/blog/2017/09/03/hello/',
-                post: true,
-                title: 'Hello, World',
-                createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)) }
+              { url: '/2003/12/13/hello-world/',
+                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
+                meta: { post: true },
+                locals: {
+                  title: 'Hello, World',
+                  publishedAt: new Date('2003-12-13T18:30:02Z'),
+                }
+              }
             ];
           })
           .end(function(p) {
@@ -46,8 +49,8 @@ describe('handlers/feed/rss', function() {
           '  <channel>',
           '    <item>',
           '      <title>Hello, World</title>',
-          '      <link>http://www.example.com/blog/2017/09/03/hello/</link>',
-          '      <pubDate>Sun, 03 Sep 2017 17:30:15 GMT</pubDate>',
+          '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
           '    </item>',
           '  </channel>',
           '</rss>',
