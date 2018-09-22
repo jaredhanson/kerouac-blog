@@ -4,6 +4,15 @@ var kerouac = require('kerouac')
 
 exports = module.exports = function(postsDB) {
   
+  function initialize(page, next) {
+    page._internals = {};
+    
+    page.meta = {
+      post: true
+    }
+    next();
+  }
+  
   function loadPost(page, next) {
     var q = {
       slug: page.params.slug,
@@ -14,7 +23,7 @@ exports = module.exports = function(postsDB) {
     
     postsDB.find(q, function(err, post) {
       page.locals.title = post.title;
-      page.locals.createdAt = post.createdAt;
+      page.locals.publishedAt = post.publishedAt;
       page.locals.modifiedAt = post.modifiedAt;
       page.content = post.content;
       
@@ -33,8 +42,9 @@ exports = module.exports = function(postsDB) {
   
   
   return [
+    initialize,
     loadPost,
-    meta,
+    //meta,
     kerouac.render()
   ];
 };

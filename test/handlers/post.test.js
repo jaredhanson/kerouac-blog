@@ -31,7 +31,7 @@ describe('handlers/post', function() {
         sinon.stub(postsDB, 'find').yields(null, {
           title: 'Hello, World',
           content: 'This post was written using Markdown.',
-          createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)),
+          publishedAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)),
           modifiedAt: new Date(Date.UTC(2017, 8, 3, 17, 32, 15))
         });
       });
@@ -54,10 +54,29 @@ describe('handlers/post', function() {
           .dispatch();
       });
       
+      it('should find package in database', function() {
+        expect(postsDB.find.callCount).to.equal(1);
+        var call = postsDB.find.getCall(0)
+        expect(call.args[0]).to.deep.equal({
+          slug: 'hello',
+          year: undefined,
+          month: undefined,
+          day: undefined
+        });
+      });
+      
+      it('should set meta', function() {
+        expect(page.meta).to.deep.equal({
+          post: true,
+        });
+      });
+      
+      /*
       it('should set metadata', function() {
         expect(page.post).to.equal(true);
         expect(page.title).to.equal('Hello, World');
       });
+      */
       
       it('should set markup', function() {
         //expect(page.markup).to.equal('md');
