@@ -1,7 +1,29 @@
 /* global describe, it */
 
-//var blog = require('..');
-var Queue = require('./stubs/queue');
+var $require = require('proxyquire');
+var sinon = require('sinon');
+var factory = require('../app/site');
+var MockSite = require('./mocks/site');
+var MockQueue = require('./mocks/queue');
+
+
+describe('site', function() {
+  
+  it('should export factory function', function() {
+    expect(factory).to.be.a('function');
+  });
+  
+  it('should be annotated', function() {
+    expect(factory['@implements']).to.deep.equal([
+      'http://i.kerouacjs.org/Site',
+      'http://i.kerouacjs.org/blog/Site'
+    ]);
+    expect(factory['@singleton']).to.be.undefined;
+  });
+  
+});
+
+
 
 /*
 describe('kerouac-blog', function() {
