@@ -61,7 +61,7 @@ exports = module.exports = function() {
     pages = site.pages.filter(function(p) {
       // Filter the set of pages to just those that are blog posts, as indicated
       // by the `post` property.
-      return p.post == true;
+      return (p.meta && p.meta.post == true);
     });
     
     json.items = [];
@@ -69,13 +69,13 @@ exports = module.exports = function() {
       post = pages[i];
     
       item = {};
-      item.id = post.fullURL || post.absoluteURL || post.url;
-      if (post.title) { item.title = post.title; }
-      if (post.tags) { item.tags = post.tags; }
+      item.id = post.canonicalURL || post.absoluteURL || post.url;
+      if (post.locals.title) { item.title = post.locals.title; }
+      if (post.locals.tags) { item.tags = post.locals.tags; }
       
       item.url = linkto(post, page);
-      if (post.createdAt) { item.date_published = post.createdAt.toISOString().substring(0,19)+'Z'; }
-      if (post.modifiedAt) { item.date_modified = post.modifiedAt.toISOString().substring(0,19)+'Z'; }
+      if (post.locals.publishedAt) { item.date_published = post.locals.publishedAt.toISOString().substring(0,19)+'Z'; }
+      if (post.locals.modifiedAt) { item.date_modified = post.locals.modifiedAt.toISOString().substring(0,19)+'Z'; }
       
       // TODO: convert content to text, stripping links, headings, etc
       item.content_text = post.content;

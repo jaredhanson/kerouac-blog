@@ -28,11 +28,14 @@ describe('handlers/feed/json', function() {
           
             page.site = site;
             page.site.pages = [
-              { url: '/blog/2017/09/03/hello/',
-                fullURL: 'http://www.example.com/blog/2017/09/03/hello/',
-                post: true,
-                title: 'Hello, World',
-                createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)) }
+              { url: '/2003/12/13/hello-world/',
+                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
+                meta: { post: true },
+                locals: {
+                  title: 'Hello, World',
+                  publishedAt: new Date('2003-12-13T18:30:02Z'),
+                }
+              }
             ];
           })
           .end(function(p) {
@@ -49,10 +52,10 @@ describe('handlers/feed/json', function() {
           '  "feed_url": "http://www.example.com/blog/feed.json",',
           '  "items": [',
           '    {',
-          '      "id": "http://www.example.com/blog/2017/09/03/hello/",',
+          '      "id": "http://www.example.com/blog/2003/12/13/hello-world/",',
           '      "title": "Hello, World",',
-          '      "url": "http://www.example.com/blog/2017/09/03/hello/",',
-          '      "date_published": "2017-09-03T17:30:15Z"',
+          '      "url": "http://www.example.com/blog/2003/12/13/hello-world/",',
+          '      "date_published": "2003-12-13T18:30:02Z"',
           '    }',
           '  ]',
           '}'
