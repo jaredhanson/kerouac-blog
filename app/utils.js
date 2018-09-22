@@ -1,7 +1,7 @@
 var uri = require('url');
 
-exports.linkto = function(from, to) {
-  return to.canonicalURL || to.fullURL || to.absoluteURL;
+exports.linkto = function(target, context) {
+  return target.canonicalURL || target.fullURL || target.absoluteURL;
 }
 
 

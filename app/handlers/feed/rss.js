@@ -26,9 +26,9 @@ exports = module.exports = function() {
   //   http://www.rssboard.org/media-rss
   //   https://en.wikipedia.org/wiki/Media_RSS
   
-  return function feed(page, next) {
+  return function rssFeed(page, next) {
     var site = page.site
-      , pages, post, item, val, i, len;
+      , posts, post, item, val, i, len;
     
     var rss = builder.create('rss', { version: '1.0', encoding: 'UTF-8' });
     rss.a('version', '2.0');
@@ -44,25 +44,25 @@ exports = module.exports = function() {
       chan.e('description', val);
     }
     
-    pages = site.pages.filter(function(p) {
+    posts = site.pages.filter(function(p) {
       return p.index == true;
     });
-    if (pages.length) {
-      chan.e('link', linkto(page, pages[0]));
+    if (posts.length) {
+      chan.e('link', linkto(posts[0], page));
     }
     
-    pages = site.pages.filter(function(p) {
+    posts = site.pages.filter(function(p) {
       // Filter the set of pages to just those that are blog posts, as indicated
       // by the `post` property.
       return p.post == true;
     });
     
-    for (i = 0, len = pages.length; i < len; i++) {
-      post = pages[i];
+    for (i = 0, len = posts.length; i < len; i++) {
+      post = posts[i];
     
       item = chan.e('item');
       if (post.title) { item.e('title', post.title); }
-      if (post.url) { item.e('link', linkto(page, post)); }
+      if (post.url) { item.e('link', linkto(post, page)); }
       if (post.createdAt) { item.e('pubDate', post.createdAt.toUTCString()); }
     };
     

@@ -59,7 +59,7 @@ exports = module.exports = function() {
     
       item = rdf.e('item');
       if (post.title) { item.e('title', post.title); }
-      if (post.url) { item.e('link', linkto(page, post)); }
+      if (post.url) { item.e('link', linkto(post, page)); }
       if (post.createdAt) { item.e('dc:date', post.createdAt.toISOString().substring(0,19)+'Z'); }
     };
     

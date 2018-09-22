@@ -17,9 +17,9 @@ exports = module.exports = function() {
     , linkto = require('../../utils').linkto;
   
   
-  return function atomFeed(page, next) {
-    var site = page.site
-      , posts, post, entry, val, i, len;
+  return function atomFeed(res, next) {
+    var site = res.site
+      , pages, post, entry, val, i, len;
     
     var feed = builder.create('feed', { version: '1.0', encoding: 'UTF-8' });
     feed.a('xmlns', 'http://www.w3.org/2005/Atom')
@@ -35,24 +35,24 @@ exports = module.exports = function() {
     
     // TODO: Get the blog index and set as `link` element
     
-    posts = site.pages.filter(function(p) {
+    pages = site.pages.filter(function(p) {
       // Filter the set of pages to just those that are blog posts, as indicated
       // by the `post` property.
       return (p.meta && p.meta.post == true);
     });
     
-    for (i = 0, len = posts.length; i < len; i++) {
-      post = posts[i];
+    for (i = 0, len = pages.length; i < len; i++) {
+      post = pages[i];
     
       entry = feed.e('entry');
       if (post.locals.title) { entry.e('title', post.locals.title); }
-      entry.e('link', { href: linkto(page, post) });
+      entry.e('link', { href: linkto(post, res) });
       if (post.locals.publishedAt) { entry.e('published', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
     };
     
     var xml = feed.end({ pretty: true });
-    page.write(xml);
-    page.end();
+    res.write(xml);
+    res.end();
   };
 };
 

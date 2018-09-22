@@ -51,7 +51,7 @@ exports = module.exports = function() {
       return p.index == true;
     });
     if (pages.length) {
-      json.home_page_url = linkto(page, pages[0]);
+      json.home_page_url = linkto(pages[0], page);
     }
     
     json.feed_url = linkto(page, page);
@@ -73,7 +73,7 @@ exports = module.exports = function() {
       if (post.title) { item.title = post.title; }
       if (post.tags) { item.tags = post.tags; }
       
-      item.url = linkto(page, post);
+      item.url = linkto(post, page);
       if (post.createdAt) { item.date_published = post.createdAt.toISOString().substring(0,19)+'Z'; }
       if (post.modifiedAt) { item.date_modified = post.modifiedAt.toISOString().substring(0,19)+'Z'; }
       
