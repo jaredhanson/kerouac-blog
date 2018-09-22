@@ -25,11 +25,14 @@ describe('handlers/feed/rdf', function() {
           .page(function(page) {
             page.site = site;
             page.site.pages = [
-              { url: '/blog/2017/09/03/hello/',
-                fullURL: 'http://www.example.com/blog/2017/09/03/hello/',
-                post: true,
-                title: 'Hello, World',
-                createdAt: new Date(Date.UTC(2017, 8, 3, 17, 30, 15)) }
+              { url: '/2003/12/13/hello-world/',
+                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
+                meta: { post: true },
+                locals: {
+                  title: 'Hello, World',
+                  publishedAt: new Date('2003-12-13T18:30:02Z'),
+                }
+              }
             ];
           })
           .end(function(p) {
@@ -46,8 +49,8 @@ describe('handlers/feed/rdf', function() {
           '  <channel/>',
           '  <item>',
           '    <title>Hello, World</title>',
-          '    <link>http://www.example.com/blog/2017/09/03/hello/</link>',
-          '    <dc:date>2017-09-03T17:30:15Z</dc:date>',
+          '    <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '    <dc:date>2003-12-13T18:30:02Z</dc:date>',
           '  </item>',
           '</rdf:RDF>',
           ''

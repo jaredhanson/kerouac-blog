@@ -51,16 +51,16 @@ exports = module.exports = function() {
     pages = site.pages.filter(function(p) {
       // Filter the set of pages to just those that are blog posts, as indicated
       // by the `post` property.
-      return p.post == true;
+      return (p.meta && p.meta.post == true);
     });
     
     for (i = 0, len = pages.length; i < len; i++) {
       post = pages[i];
     
       item = rdf.e('item');
-      if (post.title) { item.e('title', post.title); }
-      if (post.url) { item.e('link', linkto(post, page)); }
-      if (post.createdAt) { item.e('dc:date', post.createdAt.toISOString().substring(0,19)+'Z'); }
+      if (post.locals.title) { item.e('title', post.locals.title); }
+      item.e('link', linkto(post, page));
+      if (post.locals.publishedAt) { item.e('dc:date', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
     };
     
     var xml = rdf.end({ pretty: true });
