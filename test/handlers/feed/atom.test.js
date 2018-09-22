@@ -56,6 +56,6 @@ describe('handlers/feed/atom', function() {
       });
     }); // with one post
     
-  });
+  }); // handler
   
 });

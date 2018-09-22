@@ -62,6 +62,6 @@ describe('handlers/feed/json', function() {
       });
     }); // with one post
     
-  });
+  }); // handler
   
 });

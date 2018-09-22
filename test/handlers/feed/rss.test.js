@@ -58,6 +58,6 @@ describe('handlers/feed/rss', function() {
       });
     }); // with one post
     
-  });
+  }); // handler
   
 });

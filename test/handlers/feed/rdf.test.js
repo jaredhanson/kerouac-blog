@@ -57,6 +57,6 @@ describe('handlers/feed/rdf', function() {
       });
     }); // with one post
     
-  });
+  }); // handler
   
 });
