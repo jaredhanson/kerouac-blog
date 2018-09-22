@@ -61,10 +61,13 @@ exports = module.exports = function(
       
       for (i = 0, len = posts.length; i < len; ++i) {
         el = posts[i];
-        year = el.createdAt.getUTCFullYear()
-        month = (el.createdAt.getUTCMonth() + 1)
-        day = el.createdAt.getUTCDate()
+        year = el.publishedAt.getUTCFullYear()
+        month = (el.publishedAt.getUTCMonth() + 1)
+        day = el.publishedAt.getUTCDate()
         slug = el.slug;
+        
+        month = (month < 10) ? ('0' + month) : month;
+        day = (day < 10) ? ('0' + day) : day;
         
         url = '/' + [ year, month, day, slug + '.html' ].join('/');
         self.add(url);
