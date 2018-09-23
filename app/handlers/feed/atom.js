@@ -67,11 +67,13 @@ exports = module.exports = function() {
       entry = xml.e('entry');
       entry.e('id', post.locals.id || post.canonicalURL || post.url);
       if (post.locals.title) { entry.e('title', post.locals.title); }
-      entry.e('link', { rel: 'alternate', type: 'text/html', href: linkto(post, feed) });
+      entry.e('link', { href: linkto(post, feed) });
       if (post.locals.publishedAt) { entry.e('published', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
       // TODO: updated
       // TODO: author
       // TODO: content
+      
+      // TODO: external_url
     };
     
     var xml = xml.end({ pretty: true });

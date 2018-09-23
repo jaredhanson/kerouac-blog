@@ -113,7 +113,7 @@ describe('handlers/feed/json', function() {
           '  "feed_url": "http://www.example.com/blog/feed.json",',
           '  "items": [',
           '    {',
-          '      "id": "http://www.example.com/blog/2003/12/13/hello-world/",',
+          '      "id": "tag:example.org,2003:3.2397",',
           '      "title": "Hello, World",',
           '      "url": "http://www.example.com/blog/2003/12/13/hello-world/",',
           '      "date_published": "2003-12-13T18:30:02Z"',

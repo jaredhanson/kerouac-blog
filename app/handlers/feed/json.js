@@ -65,14 +65,19 @@ exports = module.exports = function() {
     
     json.feed_url = linkto(feed, feed);
     
-    // TODO: Get the blog index and set as `link` element
+    // TODO: user_comment
+    // TODO: next_url
+    // TODO: icon
+    // TODO: favicon
+    // TODO: avatar
+   
     
     json.items = [];
     for (i = 0, len = posts.length; i < len; i++) {
       post = posts[i];
     
       item = {};
-      item.id = post.canonicalURL || post.absoluteURL || post.url;
+      item.id = post.locals.id || post.canonicalURL || post.url;
       if (post.locals.title) { item.title = post.locals.title; }
       if (post.locals.tags) { item.tags = post.locals.tags; }
       
