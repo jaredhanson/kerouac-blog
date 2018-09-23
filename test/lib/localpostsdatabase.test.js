@@ -10,6 +10,33 @@ describe('LocalPostsDatabase', function() {
     expect(LocalPostsDatabase).to.be.a('function');
   });
   
+  describe('with bare file system layout', function() {
+    var db = new LocalPostsDatabase('test/fixtures/bare');
+  
+    describe('#list', function() {
+      var posts;
+    
+      before(function(done) {
+        db.list(function(err, p) {
+          if (err) { return done(err); }
+          posts = p;
+          return done();
+        });
+      });
+    
+      it('should queue pages', function() {
+        expect(posts).to.have.length(1);
+
+        expect(posts[0].publishedAt).to.be.an.instanceof(Date);
+        delete posts[0].publishedAt;
+        expect(posts[0]).to.deep.equal({
+          slug: 'hello',
+        });
+      }); 
+    }); // #list
+  
+  }); // with bare file system layout
+  
   describe('with Jekyll-style file system layout', function() {
     var db = new LocalPostsDatabase('test/fixtures/date');
   
@@ -37,11 +64,10 @@ describe('LocalPostsDatabase', function() {
         delete posts[1].publishedAt;
         expect(posts[1]).to.deep.equal({
           slug: '2017-09-04-hello-again',
-        })
-      });
-    
-    });
+        });
+      }); 
+    }); // #list
   
-  });
+  }); // with Jekyll-style file system layout
   
 });
