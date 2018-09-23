@@ -15,9 +15,10 @@ describe('handlers/feed/rdf', function() {
   });
   
   describe('handler', function() {
-    var site = kerouac();
   
     describe('with one post', function() {
+      var site = kerouac();
+      
       var page, err;
 
       before(function(done) {
