@@ -23,8 +23,7 @@ describe('handlers/feed/json', function() {
       before(function(done) {
         chai.kerouac.handler(factory())
           .page(function(page) {
-            page.url = '/blog/feed.json';
-            page.fullURL = 'http://www.example.com/blog/feed.json';
+            page.canonicalURL = 'http://www.example.com/blog/feed.json';
           
             page.site = site;
             page.site.pages = [
