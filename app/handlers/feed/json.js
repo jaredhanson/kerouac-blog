@@ -89,6 +89,9 @@ exports = module.exports = function() {
       item.content_text = post.content;
       // TODO: content_html
       
+      // TODO: author
+      // TODO: tags
+      
       
       json.items.push(item);
     };
