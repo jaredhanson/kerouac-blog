@@ -55,15 +55,15 @@ describe('LocalPostsDatabase', function() {
         expect(posts).to.have.length(2);
 
         expect(posts[0].publishedAt).to.be.an.instanceof(Date);
-        delete posts[0].publishedAt;
         expect(posts[0]).to.deep.equal({
-          slug: '2017-09-03-hello',
+          slug: 'hello',
+          publishedAt: new Date('2017-09-03T00:00:00.000Z')
         });
         
         expect(posts[1].publishedAt).to.be.an.instanceof(Date);
-        delete posts[1].publishedAt;
         expect(posts[1]).to.deep.equal({
-          slug: '2017-09-04-hello-again',
+          slug: 'hello-again',
+          publishedAt: new Date('2017-09-04T00:00:00.000Z')
         });
       }); 
     }); // #list

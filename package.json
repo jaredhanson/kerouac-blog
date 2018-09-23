@@ -37,6 +37,8 @@
   "dependencies": {
     "headmatter": "0.0.2",
     "kerouac": "0.0.x",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "utils-merge": "^1.0.1",
     "xmlbuilder": "0.4.x"
   },

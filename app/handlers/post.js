@@ -40,6 +40,10 @@ exports = module.exports = function(postsDB) {
   
   function prerender(page, next) {
     page.layout = 'blog/post';
+    
+    // TODO: automatically set `locals.url` to the absolute URL of the page, prior to render
+    // TODO: get exerpt, which should be the first paragraph (configurable)
+    
     next();
   }
   
