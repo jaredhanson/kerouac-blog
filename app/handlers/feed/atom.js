@@ -32,6 +32,8 @@ exports = module.exports = function() {
     if (val) {
       feed.e('subtitle', val);
     }
+    // TODO: Feed updated attribute
+    // TODO: Author
     
     // TODO: Get the blog index and set as `link` element
     
