@@ -24,7 +24,7 @@ describe('handlers/post', function() {
       find: function(){}
     };
     
-    describe('with posts named using bare slugs', function() {
+    describe('with slug as only parameter', function() {
       var page, layout, err;
       
       before(function() {
@@ -87,7 +87,7 @@ describe('handlers/post', function() {
       it('should render layout', function() {
         expect(layout).to.equal(undefined);
       });
-    });
+    }); // with slug as only parameter
     
   }); // handler
   

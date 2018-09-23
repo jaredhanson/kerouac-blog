@@ -5,8 +5,6 @@ var kerouac = require('kerouac')
 exports = module.exports = function(postsDB) {
   
   function initialize(page, next) {
-    page._internals = {};
-    
     page.meta = {
       post: true
     }

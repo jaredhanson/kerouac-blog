@@ -9,7 +9,7 @@ var DASHED_REGEX = /^(\d+)-(\d+)-(\d+)-(.*)/;
 
 
 exports = module.exports = function(
-  postHandler,
+  feedHandler, postHandler,
   atomFeed, rssFeed, rdfFeed, jsonFeed,
   postsDB) {
   
@@ -34,6 +34,7 @@ exports = module.exports = function(
   
   
   // HTML pages
+  site.page('/index.html', feedHandler);
   site.page('/:year/:month/:day/:slug.html', postHandler);
   // FIXME: pretty URL isn't catching this
   //site.page('/index.html', require('./handlers/index')(options.layout));
@@ -87,6 +88,7 @@ exports['@implements'] = [
   'http://i.kerouacjs.org/blog/Site'
 ];
 exports['@require'] = [
+  './handlers/feed',
   './handlers/post',
   './handlers/feed/atom',
   './handlers/feed/rss',
