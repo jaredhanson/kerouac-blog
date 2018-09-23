@@ -1,5 +1,5 @@
 exports = module.exports = function() {
-  var LocalPostsDatabase = require('../../lib/db/local/posts');
+  var LocalPostsDatabase = require('../../lib/localpostsdatabase');
   
   return new LocalPostsDatabase();
 };
