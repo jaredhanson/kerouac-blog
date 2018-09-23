@@ -125,7 +125,7 @@ describe('LocalPostsDatabase', function() {
         });
     
         it('should queue pages', function() {
-          expect(posts).to.have.length(2);
+          expect(posts).to.have.length(3);
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
             publishedAt: new Date('2017-09-03T00:00:00.000Z')
@@ -133,6 +133,10 @@ describe('LocalPostsDatabase', function() {
           expect(posts[1]).to.deep.equal({
             slug: 'hello-again',
             publishedAt: new Date('2017-09-04T00:00:00.000Z')
+          });
+          expect(posts[2]).to.deep.equal({
+            slug: 'published',
+            publishedAt: new Date('2018-04-26T20:09:27.000Z')
           });
         }); 
       }); // #list
@@ -154,7 +158,7 @@ describe('LocalPostsDatabase', function() {
         });
     
         it('should queue pages', function() {
-          expect(posts).to.have.length(2);
+          expect(posts).to.have.length(3);
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
             publishedAt: new Date('2017-09-03T07:00:00.000Z')
@@ -162,6 +166,10 @@ describe('LocalPostsDatabase', function() {
           expect(posts[1]).to.deep.equal({
             slug: 'hello-again',
             publishedAt: new Date('2017-09-04T07:00:00.000Z')
+          });
+          expect(posts[2]).to.deep.equal({
+            slug: 'published',
+            publishedAt: new Date('2018-04-26T20:09:27.000Z')
           });
         }); 
       }); // #list
