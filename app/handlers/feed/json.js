@@ -31,9 +31,21 @@ exports = module.exports = function() {
   var linkto = require('../../utils').linkto;
   
   
-  return function feed(page, next) {
-    var site = page.site
-      , pages, post, item, val, i, len;
+  return function jsonFeed(feed, next) {
+    var site = feed.site
+      , home, posts, post, item, val, i, len;
+    
+    home = site.pages.filter(function(p) {
+      return (p.meta && p.meta.home == true);
+    });
+    if (home.length) { home = home[0]; }
+    else { home = undefined; }
+  
+    posts = site.pages.filter(function(p) {
+      // Filter the set of pages to just those that are blog posts.
+      return (p.meta && p.meta.post == true);
+    });
+    
     
     var json = {};
     json.version = 'https://jsonfeed.org/version/1';
@@ -47,33 +59,24 @@ exports = module.exports = function() {
       json.description = val;
     }
     
-    pages = site.pages.filter(function(p) {
-      return p.index == true;
-    });
-    if (pages.length) {
-      json.home_page_url = linkto(pages[0], page);
+    if (home) {
+      json.home_page_url = linkto(home, feed);
     }
     
-    json.feed_url = linkto(page, page);
+    json.feed_url = linkto(feed, feed);
     
     // TODO: Get the blog index and set as `link` element
     
-    pages = site.pages.filter(function(p) {
-      // Filter the set of pages to just those that are blog posts, as indicated
-      // by the `post` property.
-      return (p.meta && p.meta.post == true);
-    });
-    
     json.items = [];
-    for (i = 0, len = pages.length; i < len; i++) {
-      post = pages[i];
+    for (i = 0, len = posts.length; i < len; i++) {
+      post = posts[i];
     
       item = {};
       item.id = post.canonicalURL || post.absoluteURL || post.url;
       if (post.locals.title) { item.title = post.locals.title; }
       if (post.locals.tags) { item.tags = post.locals.tags; }
       
-      item.url = linkto(post, page);
+      item.url = linkto(post, feed);
       if (post.locals.publishedAt) { item.date_published = post.locals.publishedAt.toISOString().substring(0,19)+'Z'; }
       if (post.locals.modifiedAt) { item.date_modified = post.locals.modifiedAt.toISOString().substring(0,19)+'Z'; }
       
@@ -85,8 +88,8 @@ exports = module.exports = function() {
       json.items.push(item);
     };
     
-    page.write(JSON.stringify(json, null, 2));
-    page.end();
+    feed.write(JSON.stringify(json, null, 2));
+    feed.end();
   };
 };
 
