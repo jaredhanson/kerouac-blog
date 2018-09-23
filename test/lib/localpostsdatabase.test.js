@@ -38,35 +38,72 @@ describe('LocalPostsDatabase', function() {
   }); // with bare file system layout
   
   describe('with Jekyll-style file system layout', function() {
-    var db = new LocalPostsDatabase('test/fixtures/date');
+    
+    describe('in UTC timezone', function() {
+      var db = new LocalPostsDatabase('test/fixtures/date');
   
-    describe('#list', function() {
-      var posts;
+      describe('#list', function() {
+        var posts;
     
-      before(function(done) {
-        db.list(function(err, p) {
-          if (err) { return done(err); }
-          posts = p;
-          return done();
+        before(function(done) {
+          db.list(function(err, p) {
+            if (err) { return done(err); }
+            posts = p;
+            return done();
+          });
         });
-      });
     
-      it('should queue pages', function() {
-        expect(posts).to.have.length(2);
+        it('should queue pages', function() {
+          expect(posts).to.have.length(2);
 
-        expect(posts[0].publishedAt).to.be.an.instanceof(Date);
-        expect(posts[0]).to.deep.equal({
-          slug: 'hello',
-          publishedAt: new Date('2017-09-03T00:00:00.000Z')
-        });
+          expect(posts[0].publishedAt).to.be.an.instanceof(Date);
+          expect(posts[0]).to.deep.equal({
+            slug: 'hello',
+            publishedAt: new Date('2017-09-03T00:00:00.000Z')
+          });
         
-        expect(posts[1].publishedAt).to.be.an.instanceof(Date);
-        expect(posts[1]).to.deep.equal({
-          slug: 'hello-again',
-          publishedAt: new Date('2017-09-04T00:00:00.000Z')
+          expect(posts[1].publishedAt).to.be.an.instanceof(Date);
+          expect(posts[1]).to.deep.equal({
+            slug: 'hello-again',
+            publishedAt: new Date('2017-09-04T00:00:00.000Z')
+          });
+        }); 
+      }); // #list
+      
+    }); // in UTC timezone
+    
+    describe('in Lost_Angeles timezone', function() {
+      var db = new LocalPostsDatabase('test/fixtures/date', 'America/Los_Angeles');
+  
+      describe('#list', function() {
+        var posts;
+    
+        before(function(done) {
+          db.list(function(err, p) {
+            if (err) { return done(err); }
+            posts = p;
+            return done();
+          });
         });
-      }); 
-    }); // #list
+    
+        it('should queue pages', function() {
+          expect(posts).to.have.length(2);
+
+          expect(posts[0].publishedAt).to.be.an.instanceof(Date);
+          expect(posts[0]).to.deep.equal({
+            slug: 'hello',
+            publishedAt: new Date('2017-09-03T07:00:00.000Z')
+          });
+        
+          expect(posts[1].publishedAt).to.be.an.instanceof(Date);
+          expect(posts[1]).to.deep.equal({
+            slug: 'hello-again',
+            publishedAt: new Date('2017-09-04T07:00:00.000Z')
+          });
+        }); 
+      }); // #list
+      
+    }); // in Lost_Angeles timezone
   
   }); // with Jekyll-style file system layout
   
