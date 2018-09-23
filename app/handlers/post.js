@@ -30,11 +30,11 @@ exports = module.exports = function(postsDB) {
   }
   
   function meta(page, next) {
-    page.locals.createdAt = page.createdAt;
+    //page.locals.createdAt = page.createdAt;
     
-    page.post = true;
-    page.title = page.locals.title;
-    page.tags = utils.tarray(page.locals.tags);
+    //page.post = true;
+    //page.title = page.locals.title;
+    //page.tags = utils.tarray(page.locals.tags);
     next();
   }
   
