@@ -1,5 +1,5 @@
 /**
- * RSS middleware.
+ * RDF Site Summary (RSS) 1.0 middleware.
  *
  * This middleware generates a feed in RSS 1.0 format, which can be used to
  * syndicate content to users and other websites.

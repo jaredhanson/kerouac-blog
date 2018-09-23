@@ -1,5 +1,5 @@
 /**
- * Atom middleware.
+ * Atom 1.0 middleware.
  *
  * This middleware generates a feed in Atom format, which can be used to
  * syndicate content to users and other websites.

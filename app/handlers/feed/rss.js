@@ -1,5 +1,5 @@
 /**
- * RSS middleware.
+ * Really Simple Syndication (RSS) 2.0 middleware.
  *
  * This middleware generates a feed in RSS 2.0 format, which can be used to
  * syndicate content to users and other websites.
