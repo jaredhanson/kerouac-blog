@@ -178,4 +178,41 @@ describe('LocalPostsDatabase', function() {
   
   }); // with files named by date and slug
   
+  describe('with files organized by year and named with month, day, and slug', function() {
+    
+    describe('in UTC timezone', function() {
+      var db = new LocalPostsDatabase('test/fixtures/year');
+  
+      describe('#list', function() {
+        var posts;
+    
+        before(function(done) {
+          db.list(function(err, p) {
+            if (err) { return done(err); }
+            posts = p;
+            return done();
+          });
+        });
+    
+        it('should queue pages', function() {
+          expect(posts).to.have.length(3);
+          expect(posts[0]).to.deep.equal({
+            slug: 'hello',
+            publishedAt: new Date('2017-09-03T00:00:00.000Z')
+          });
+          expect(posts[1]).to.deep.equal({
+            slug: 'hello-again',
+            publishedAt: new Date('2017-09-04T00:00:00.000Z')
+          });
+          expect(posts[2]).to.deep.equal({
+            slug: 'published',
+            publishedAt: new Date('2018-04-26T20:09:27.000Z')
+          });
+        }); 
+      }); // #list
+      
+    }); // in UTC timezone
+    
+  }); // with files organized by year and named with month, day, and slug
+  
 });
