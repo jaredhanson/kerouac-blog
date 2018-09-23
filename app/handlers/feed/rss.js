@@ -26,8 +26,8 @@ exports = module.exports = function() {
   //   http://www.rssboard.org/media-rss
   //   https://en.wikipedia.org/wiki/Media_RSS
   
-  return function rssFeed(page, next) {
-    var site = page.site
+  return function rssFeed(feed, next) {
+    var site = feed.site
       , home, posts, post, item, val, i, len;
     
     home = site.pages.filter(function(p) {
@@ -42,10 +42,10 @@ exports = module.exports = function() {
     });
     
     
-    var rss = builder.create('rss', { version: '1.0', encoding: 'UTF-8' });
-    rss.a('version', '2.0');
+    var xml = builder.create('rss', { version: '1.0', encoding: 'UTF-8' });
+    xml.a('version', '2.0');
     
-    var chan = rss.e('channel')
+    var chan = xml.e('channel')
     
     val = site.get('title');
     if (val) {
@@ -57,7 +57,7 @@ exports = module.exports = function() {
     }
     
     if (home) {
-      chan.e('link', linkto(home, page));
+      chan.e('link', linkto(home, feed));
     }
     
     for (i = 0, len = posts.length; i < len; i++) {
@@ -65,13 +65,13 @@ exports = module.exports = function() {
     
       item = chan.e('item');
       if (post.locals.title) { item.e('title', post.locals.title); }
-      item.e('link', linkto(post, page));
+      item.e('link', linkto(post, feed));
       if (post.locals.publishedAt) { item.e('pubDate', post.locals.publishedAt.toUTCString()); }
     };
     
-    var xml = rss.end({ pretty: true });
-    page.write(xml);
-    page.end();
+    var xml = xml.end({ pretty: true });
+    feed.write(xml);
+    feed.end();
   };
 };
 
