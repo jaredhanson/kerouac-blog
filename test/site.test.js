@@ -44,8 +44,10 @@ describe('site', function() {
     
     it('should add routes', function() {
       expect(site._routes.length).to.equal(7);
-      expect(site._routes[1].path).to.equal('/:year/:month/:day/:slug.html');
-      expect(site._routes[1].handler).to.equal(postHandler);
+      expect(site._routes[0].path).to.equal('/:year/:month/:day/:slug.html');
+      expect(site._routes[0].handler).to.equal(postHandler);
+      expect(site._routes[1].path).to.equal('/index.html');
+      expect(site._routes[1].handler).to.equal(feedHandler);
       expect(site._routes[2].path).to.equal('/feed.atom');
       expect(site._routes[2].handler).to.equal(atomFeedHandler);
       expect(site._routes[3].path).to.equal('/feed.rss');

@@ -34,8 +34,8 @@ exports = module.exports = function(
   
   
   // HTML pages
-  site.page('/index.html', feedHandler);
   site.page('/:year/:month/:day/:slug.html', postHandler);
+  site.page('/index.html', feedHandler);
   // FIXME: pretty URL isn't catching this
   //site.page('/index.html', require('./handlers/index')(options.layout));
   
