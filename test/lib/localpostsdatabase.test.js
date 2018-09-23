@@ -10,8 +10,8 @@ describe('LocalPostsDatabase', function() {
     expect(LocalPostsDatabase).to.be.a('function');
   });
   
-  describe('with bare file system layout', function() {
-    var db = new LocalPostsDatabase('test/fixtures/bare');
+  describe('with files named by slug', function() {
+    var db = new LocalPostsDatabase('test/fixtures/slug');
   
     describe('#list', function() {
       var posts;
@@ -35,9 +35,9 @@ describe('LocalPostsDatabase', function() {
       }); 
     }); // #list
   
-  }); // with bare file system layout
+  }); // with files named by slug
   
-  describe('with Jekyll-style file system layout', function() {
+  describe('with files named by date and slug', function() {
     
     describe('in UTC timezone', function() {
       var db = new LocalPostsDatabase('test/fixtures/date');
@@ -105,6 +105,6 @@ describe('LocalPostsDatabase', function() {
       
     }); // in Lost_Angeles timezone
   
-  }); // with Jekyll-style file system layout
+  }); // with files named by date and slug
   
 });

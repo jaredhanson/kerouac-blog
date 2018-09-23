@@ -72,6 +72,7 @@ exports = module.exports = function(
         month = (month < 10) ? ('0' + month) : month;
         day = (day < 10) ? ('0' + day) : day;
         
+        // TODO: make sure these are in right timezone
         url = '/' + [ year, month, day, slug + '.html' ].join('/');
         self.add(url);
       }
