@@ -28,7 +28,19 @@ exports = module.exports = function() {
   
   return function rssFeed(page, next) {
     var site = page.site
-      , posts, post, item, val, i, len;
+      , home, posts, post, item, val, i, len;
+    
+    home = site.pages.filter(function(p) {
+      return (p.meta && p.meta.home == true);
+    });
+    if (home.length) { home = home[0]; }
+    else { home = undefined; }
+    
+    posts = site.pages.filter(function(p) {
+      // Filter the set of pages to just those that are blog posts.
+      return (p.meta && p.meta.post == true);
+    });
+    
     
     var rss = builder.create('rss', { version: '1.0', encoding: 'UTF-8' });
     rss.a('version', '2.0');
@@ -44,18 +56,9 @@ exports = module.exports = function() {
       chan.e('description', val);
     }
     
-    posts = site.pages.filter(function(p) {
-      return p.index == true;
-    });
-    if (posts.length) {
-      chan.e('link', linkto(posts[0], page));
+    if (home) {
+      chan.e('link', linkto(home, page));
     }
-    
-    posts = site.pages.filter(function(p) {
-      // Filter the set of pages to just those that are blog posts, as indicated
-      // by the `post` property.
-      return (p.meta && p.meta.post == true);
-    });
     
     for (i = 0, len = posts.length; i < len; i++) {
       post = posts[i];
