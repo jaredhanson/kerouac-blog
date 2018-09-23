@@ -23,6 +23,8 @@ describe('handlers/feed/rdf', function() {
       before(function(done) {
         chai.kerouac.handler(factory())
           .page(function(page) {
+            page.canonicalURL = 'http://www.example.com/blog/feed.rdf';
+            
             page.site = site;
             page.site.pages = [
               { url: '/2003/12/13/hello-world/',
