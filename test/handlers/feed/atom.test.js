@@ -23,6 +23,8 @@ describe('handlers/feed/atom', function() {
       before(function(done) {
         chai.kerouac.handler(factory())
           .page(function(page) {
+            page.canonicalURL = 'http://www.example.com/blog/feed.atom';
+            
             page.site = site;
             page.site.pages = [
               { url: '/2003/12/13/hello-world/',
@@ -46,6 +48,7 @@ describe('handlers/feed/atom', function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
+          '  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
           '  <entry>',
           '    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
           '    <title>Hello, World</title>',
@@ -70,6 +73,8 @@ describe('handlers/feed/atom', function() {
       before(function(done) {
         chai.kerouac.handler(factory())
           .page(function(page) {
+            page.canonicalURL = 'http://www.example.com/blog/feed.atom';
+            
             page.site = site;
             page.site.pages = [
               { url: '/',
@@ -103,6 +108,7 @@ describe('handlers/feed/atom', function() {
           '  <title>dive into mark</title>',
           '  <subtitle>A lot of effort went into making this effortless</subtitle>',
           '  <link rel="alternate" type="text/html" href="http://www.example.com/blog/"/>',
+          '  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
           '  <entry>',
           '    <id>tag:example.org,2003:3.2397</id>',
           '    <title>Hello, World</title>',

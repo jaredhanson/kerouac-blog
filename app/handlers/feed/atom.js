@@ -45,13 +45,15 @@ exports = module.exports = function() {
       xml.e('subtitle', val);
     }
     // TODO: Feed updated attribute
+    // TODO: id?
     
     if (home) {
       xml.e('link', { rel: 'alternate', type: 'text/html', href: linkto(home, feed) });
     }
+    xml.e('link', { rel: 'self', type: 'application/atom+xml', href: linkto(feed, feed) });
+    
     // TODO: Author
     
-    // TODO: Get the blog index and set as `link` element
     
     for (i = 0, len = posts.length; i < len; i++) {
       post = posts[i];
