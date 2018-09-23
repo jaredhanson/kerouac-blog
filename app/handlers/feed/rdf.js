@@ -26,16 +26,28 @@ exports = module.exports = function() {
   // TODO: Implement support for mod_enclosure
   //       https://foz.home.xs4all.nl/mod_enclosure.html
   
-  return function feed(page, next) {
-    var site = page.site
-      , pages, post, item, val, i, len;
+  return function rdfFeed(feed, next) {
+    var site = feed.site
+      , home, posts, post, item, val, i, len;
     
-    var rdf = builder.create('rdf:RDF', { version: '1.0', encoding: 'UTF-8' });
-    rdf.a('xmlns', 'http://purl.org/rss/1.0/')
-    rdf.a('xmlns:rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
-    rdf.a('xmlns:dc', 'http://purl.org/dc/elements/1.1/')
+    home = site.pages.filter(function(p) {
+      return (p.meta && p.meta.home == true);
+    });
+    if (home.length) { home = home[0]; }
+    else { home = undefined; }
     
-    var chan = rdf.e('channel');
+    posts = site.pages.filter(function(p) {
+      // Filter the set of pages to just those that are blog posts.
+      return (p.meta && p.meta.post == true);
+    });
+    
+    
+    var xml = builder.create('rdf:RDF', { version: '1.0', encoding: 'UTF-8' });
+    xml.a('xmlns', 'http://purl.org/rss/1.0/')
+    xml.a('xmlns:rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+    xml.a('xmlns:dc', 'http://purl.org/dc/elements/1.1/')
+    
+    var chan = xml.e('channel');
     
     val = site.get('title');
     if (val) {
@@ -48,24 +60,18 @@ exports = module.exports = function() {
     
     // TODO: Get the blog index and set as `link` element
     
-    pages = site.pages.filter(function(p) {
-      // Filter the set of pages to just those that are blog posts, as indicated
-      // by the `post` property.
-      return (p.meta && p.meta.post == true);
-    });
+    for (i = 0, len = posts.length; i < len; i++) {
+      post = posts[i];
     
-    for (i = 0, len = pages.length; i < len; i++) {
-      post = pages[i];
-    
-      item = rdf.e('item');
+      item = xml.e('item');
       if (post.locals.title) { item.e('title', post.locals.title); }
-      item.e('link', linkto(post, page));
+      item.e('link', linkto(post, feed));
       if (post.locals.publishedAt) { item.e('dc:date', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
     };
     
-    var xml = rdf.end({ pretty: true });
-    page.write(xml);
-    page.end();
+    var xml = xml.end({ pretty: true });
+    feed.write(xml);
+    feed.end();
   };
 };
 
