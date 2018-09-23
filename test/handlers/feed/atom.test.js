@@ -47,6 +47,7 @@ describe('handlers/feed/atom', function() {
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
           '  <entry>',
+          '    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
           '    <title>Hello, World</title>',
           '    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
@@ -75,6 +76,7 @@ describe('handlers/feed/atom', function() {
                 canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
                 meta: { post: true },
                 locals: {
+                  id: 'tag:example.org,2003:3.2397',
                   title: 'Hello, World',
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
                 }
@@ -95,6 +97,7 @@ describe('handlers/feed/atom', function() {
           '  <title>dive into mark</title>',
           '  <subtitle>A lot of effort went into making this effortless</subtitle>',
           '  <entry>',
+          '    <id>tag:example.org,2003:3.2397</id>',
           '    <title>Hello, World</title>',
           '    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
