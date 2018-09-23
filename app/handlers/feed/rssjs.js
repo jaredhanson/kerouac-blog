@@ -29,9 +29,46 @@
  *   - [Implement a JSON feed using rssjs.org spec](https://core.trac.wordpress.org/ticket/25639)
  */
 exports = module.exports = function() {
+  var linkto = require('../../utils').linkto;
   
-  return function rssjs(page, next) {
+  
+  return function rssjsFeed(feed, next) {
+    var site = feed.site
+      , home, posts, post, item, val, i, len;
+  
+    home = site.pages.filter(function(p) {
+      return (p.meta && p.meta.home == true);
+    });
+    if (home.length) { home = home[0]; }
+    else { home = undefined; }
+
+    posts = site.pages.filter(function(p) {
+      // Filter the set of pages to just those that are blog posts.
+      return (p.meta && p.meta.post == true);
+    });
     
+    
+    var json = {};
+    json.rss = {};
+    json.rss.version = '2.0';
+    
+    json.rss.items = [];
+    for (i = 0, len = posts.length; i < len; i++) {
+      post = posts[i];
+    
+      item = {};
+      item.guid = post.locals.id || post.canonicalURL || post.url;
+      if (post.locals.title) { item.title = post.locals.title; }
+      
+      item.link = linkto(post, feed);
+      if (post.locals.publishedAt) { item.pubDate = post.locals.publishedAt.toUTCString(); }
+      
+      
+      json.rss.items.push(item);
+    };
+    
+    feed.write(JSON.stringify(json, null, 2));
+    feed.end();
   }
 }
 
