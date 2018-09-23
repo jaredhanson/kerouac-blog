@@ -72,6 +72,12 @@ describe('handlers/feed/atom', function() {
           .page(function(page) {
             page.site = site;
             page.site.pages = [
+              { url: '/',
+                canonicalURL: 'http://www.example.com/blog/',
+                meta: { home: true },
+                locals: {
+                }
+              },
               { url: '/2003/12/13/hello-world/',
                 canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
                 meta: { post: true },
@@ -96,6 +102,7 @@ describe('handlers/feed/atom', function() {
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
           '  <title>dive into mark</title>',
           '  <subtitle>A lot of effort went into making this effortless</subtitle>',
+          '  <link rel="alternate" type="text/html" href="http://www.example.com/blog/"/>',
           '  <entry>',
           '    <id>tag:example.org,2003:3.2397</id>',
           '    <title>Hello, World</title>',

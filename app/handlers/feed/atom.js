@@ -17,9 +17,15 @@ exports = module.exports = function() {
     , linkto = require('../../utils').linkto;
   
   
-  return function atomFeed(res, next) {
-    var site = res.site
-      , posts, post, entry, val, i, len;
+  return function atomFeed(feed, next) {
+    var site = feed.site
+      , home, posts, post, entry, val, i, len;
+    
+    home = site.pages.filter(function(p) {
+      return (p.meta && p.meta.home == true);
+    });
+    if (home.length) { home = home[0]; }
+    else { home = undefined; }
     
     posts = site.pages.filter(function(p) {
       // Filter the set of pages to just those that are blog posts.
@@ -27,18 +33,22 @@ exports = module.exports = function() {
     });
     
     
-    var feed = builder.create('feed', { version: '1.0', encoding: 'UTF-8' });
-    feed.a('xmlns', 'http://www.w3.org/2005/Atom')
+    var xml = builder.create('feed', { version: '1.0', encoding: 'UTF-8' });
+    xml.a('xmlns', 'http://www.w3.org/2005/Atom')
     
     val = site.get('title');
     if (val) {
-      feed.e('title', val);
+      xml.e('title', val);
     }
     val = site.get('description');
     if (val) {
-      feed.e('subtitle', val);
+      xml.e('subtitle', val);
     }
     // TODO: Feed updated attribute
+    
+    if (home) {
+      xml.e('link', { rel: 'alternate', type: 'text/html', href: linkto(home, feed) });
+    }
     // TODO: Author
     
     // TODO: Get the blog index and set as `link` element
@@ -50,16 +60,16 @@ exports = module.exports = function() {
       // TODO: updated
       // TODO: summary
     
-      entry = feed.e('entry');
+      entry = xml.e('entry');
       entry.e('id', post.locals.id || post.canonicalURL || post.url);
       if (post.locals.title) { entry.e('title', post.locals.title); }
-      entry.e('link', { href: linkto(post, res) });
+      entry.e('link', { href: linkto(post, feed) });
       if (post.locals.publishedAt) { entry.e('published', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
     };
     
-    var xml = feed.end({ pretty: true });
-    res.write(xml);
-    res.end();
+    var xml = xml.end({ pretty: true });
+    feed.write(xml);
+    feed.end();
   };
 };
 
