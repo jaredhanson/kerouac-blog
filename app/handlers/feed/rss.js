@@ -60,13 +60,34 @@ exports = module.exports = function() {
       chan.e('link', linkto(home, feed));
     }
     
+    // TODO: language
+    // TODO: copyright
+    // TODO: pubDate
+    // TODO: lastBuildDate
+    // TODO: category
+    // TODO: generator
+    // TODO: ttl
+    // TODO: image
+    
+    
     for (i = 0, len = posts.length; i < len; i++) {
       post = posts[i];
     
       item = chan.e('item');
+      if (post.locals.id) {
+        item.e('guid', { isPermaLink: false }, post.locals.id);
+      } else if (post.canonicalURL) {
+        item.e('guid', { isPermaLink: true }, post.canonicalURL);
+      } else {
+        item.e('guid', { isPermaLink: false }, post.url);
+      }
       if (post.locals.title) { item.e('title', post.locals.title); }
       item.e('link', linkto(post, feed));
       if (post.locals.publishedAt) { item.e('pubDate', post.locals.publishedAt.toUTCString()); }
+      
+      // TODO: description
+      // TODO: author
+      // TODO: category
     };
     
     var xml = xml.end({ pretty: true });
