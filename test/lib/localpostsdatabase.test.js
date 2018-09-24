@@ -13,30 +13,37 @@ describe('LocalPostsDatabase', function() {
   describe('#find', function() {
     var db = new LocalPostsDatabase('test/fixtures');
     
-    describe('all metadata', function() {
-      
+    describe('a post containing metadata from the extensive, single-entry example in RFC 4287', function() {
       var post;
   
       before(function(done) {
-        db.find({ file: 'all-metadata.md' }, function(err, p) {
+        db.find({ file: 'atom-extensive.md' }, function(err, p) {
           if (err) { return done(err); }
           post = p;
           return done();
         });
       });
       
-      it('should queue pages', function() {
+      it('should yield post', function() {
         expect(post).to.deep.equal({
           title: 'Atom draft-07 snapshot',
+          author: {
+            email: 'f8dy@example.com',
+            name: 'Mark Pilgrim',
+            url: 'http://example.org/'
+          },
+          contributors: [
+            { name: 'Sam Ruby' },
+            { name: 'Joe Gregorio' }
+          ],
           publishedAt: new Date('2003-12-13T12:29:29.000Z'),
           updatedAt: new Date('2005-07-31T12:29:29.000Z'),
           content: 'Update: The Atom draft is finished.\n'
         });
       });
-      
-    }); // all metadata
+    }); // a post containing metadata from the extensive, single-entry example in RFC 4287
     
-  });
+  }); // #find
   
   describe('with files named by slug', function() {
   
