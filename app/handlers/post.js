@@ -16,10 +16,13 @@ exports = module.exports = function(postsDB) {
       slug: page.params.slug,
       year: page.params.year,
       month: page.params.month,
-      day: page.params.day
+      day: page.params.day,
+    }
+    if (page.context) {
+      q.file = page.context.file;
     }
     
-    postsDB.find(page.context, function(err, post) {
+    postsDB.find(q, function(err, post) {
       page.locals.title = post.title;
       page.locals.publishedAt = post.publishedAt;
       page.locals.modifiedAt = post.modifiedAt;
