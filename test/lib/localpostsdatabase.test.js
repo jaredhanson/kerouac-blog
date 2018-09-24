@@ -10,6 +10,34 @@ describe('LocalPostsDatabase', function() {
     expect(LocalPostsDatabase).to.be.a('function');
   });
   
+  describe('#find', function() {
+    var db = new LocalPostsDatabase('test/fixtures');
+    
+    describe('all metadata', function() {
+      
+      var post;
+  
+      before(function(done) {
+        db.find({ file: 'all-metadata.md' }, function(err, p) {
+          if (err) { return done(err); }
+          post = p;
+          return done();
+        });
+      });
+      
+      it('should queue pages', function() {
+        expect(post).to.deep.equal({
+          title: 'Atom draft-07 snapshot',
+          publishedAt: new Date('2003-12-13T12:29:29.000Z'),
+          updatedAt: new Date('2005-07-31T12:29:29.000Z'),
+          content: 'Update: The Atom draft is finished.\n'
+        });
+      });
+      
+    }); // all metadata
+    
+  });
+  
   describe('with files named by slug', function() {
   
     describe('in UTC timezone', function() {
