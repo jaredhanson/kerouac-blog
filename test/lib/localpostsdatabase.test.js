@@ -33,26 +33,32 @@ describe('LocalPostsDatabase', function() {
           delete posts[0].publishedAt;
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
+            context: { file: 'hello.md' }
           });
           expect(posts[1]).to.deep.equal({
             slug: 'published-in-local',
-            publishedAt: new Date('2018-09-23T13:09:27.000Z')
+            publishedAt: new Date('2018-09-23T13:09:27.000Z'),
+            context: { file: 'published-in-local.md' }
           });
           expect(posts[2]).to.deep.equal({
             slug: 'published-in-nyc',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-nyc.md' }
           });
           expect(posts[3]).to.deep.equal({
             slug: 'published-in-nz',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-nz.md' }
           });
           expect(posts[4]).to.deep.equal({
             slug: 'published-in-sf',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-sf.md' }
           });
           expect(posts[5]).to.deep.equal({
             slug: 'published-in-utc',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-utc.md' }
           });
         }); 
       }); // #list
@@ -80,26 +86,32 @@ describe('LocalPostsDatabase', function() {
           delete posts[0].publishedAt;
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
+            context: { file: 'hello.md' }
           });
           expect(posts[1]).to.deep.equal({
             slug: 'published-in-local',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-local.md' }
           });
           expect(posts[2]).to.deep.equal({
             slug: 'published-in-nyc',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-nyc.md' }
           });
           expect(posts[3]).to.deep.equal({
             slug: 'published-in-nz',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-nz.md' }
           });
           expect(posts[4]).to.deep.equal({
             slug: 'published-in-sf',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-sf.md' }
           });
           expect(posts[5]).to.deep.equal({
             slug: 'published-in-utc',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z')
+            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+            context: { file: 'published-in-utc.md' }
           });
         }); 
       }); // #list
@@ -128,15 +140,18 @@ describe('LocalPostsDatabase', function() {
           expect(posts).to.have.length(3);
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
-            publishedAt: new Date('2017-09-03T00:00:00.000Z')
+            publishedAt: new Date('2017-09-03T00:00:00.000Z'),
+            context: { file: '2017-09-03-hello.md' }
           });
           expect(posts[1]).to.deep.equal({
             slug: 'hello-again',
-            publishedAt: new Date('2017-09-04T00:00:00.000Z')
+            publishedAt: new Date('2017-09-04T00:00:00.000Z'),
+            context: { file: '2017-09-04-hello-again.md' }
           });
           expect(posts[2]).to.deep.equal({
             slug: 'published',
-            publishedAt: new Date('2018-04-26T20:09:27.000Z')
+            publishedAt: new Date('2018-04-26T20:09:27.000Z'),
+            context: { file: '2018-04-22-published.md' }
           });
         }); 
       }); // #list
@@ -161,15 +176,18 @@ describe('LocalPostsDatabase', function() {
           expect(posts).to.have.length(3);
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
-            publishedAt: new Date('2017-09-03T07:00:00.000Z')
+            publishedAt: new Date('2017-09-03T07:00:00.000Z'),
+            context: { file: '2017-09-03-hello.md' }
           });
           expect(posts[1]).to.deep.equal({
             slug: 'hello-again',
-            publishedAt: new Date('2017-09-04T07:00:00.000Z')
+            publishedAt: new Date('2017-09-04T07:00:00.000Z'),
+            context: { file: '2017-09-04-hello-again.md' }
           });
           expect(posts[2]).to.deep.equal({
             slug: 'published',
-            publishedAt: new Date('2018-04-26T20:09:27.000Z')
+            publishedAt: new Date('2018-04-26T20:09:27.000Z'),
+            context: { file: '2018-04-22-published.md' }
           });
         }); 
       }); // #list
@@ -198,15 +216,18 @@ describe('LocalPostsDatabase', function() {
           expect(posts).to.have.length(3);
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
-            publishedAt: new Date('2017-09-03T00:00:00.000Z')
+            publishedAt: new Date('2017-09-03T00:00:00.000Z'),
+            context: { file: '2017/09-03-hello.md' }
           });
           expect(posts[1]).to.deep.equal({
             slug: 'hello-again',
-            publishedAt: new Date('2017-09-04T00:00:00.000Z')
+            publishedAt: new Date('2017-09-04T00:00:00.000Z'),
+            context: { file: '2017/09-04-hello-again.md' }
           });
           expect(posts[2]).to.deep.equal({
             slug: 'published',
-            publishedAt: new Date('2018-04-26T20:09:27.000Z')
+            publishedAt: new Date('2018-04-26T20:09:27.000Z'),
+            context: { file: '2018/04-22-published.md' }
           });
         }); 
       }); // #list
@@ -220,7 +241,7 @@ describe('LocalPostsDatabase', function() {
     describe('in UTC timezone', function() {
       var db = new LocalPostsDatabase('test/fixtures/year-month');
   
-      describe.only('#list', function() {
+      describe('#list', function() {
         var posts;
     
         before(function(done) {
@@ -235,15 +256,18 @@ describe('LocalPostsDatabase', function() {
           expect(posts).to.have.length(3);
           expect(posts[0]).to.deep.equal({
             slug: 'hello',
-            publishedAt: new Date('2017-09-03T00:00:00.000Z')
+            publishedAt: new Date('2017-09-03T00:00:00.000Z'),
+            context: { file: '2017/09/03-hello.md' }
           });
           expect(posts[1]).to.deep.equal({
             slug: 'hello-again',
-            publishedAt: new Date('2017-10-04T00:00:00.000Z')
+            publishedAt: new Date('2017-10-04T00:00:00.000Z'),
+            context: { file: '2017/10/04-hello-again.md' }
           });
           expect(posts[2]).to.deep.equal({
             slug: 'published',
-            publishedAt: new Date('2018-04-26T20:09:27.000Z')
+            publishedAt: new Date('2018-04-26T20:09:27.000Z'),
+            context: { file: '2018/04/22-published.md' }
           });
         }); 
       }); // #list

@@ -45,6 +45,7 @@ describe('handlers/post', function() {
           .page(function(page) {
             page.site = site;
             page.params = { slug: 'hello' };
+            page.context = { file: 'hello.md' }
           })
           .render(function(p, l) {
             page = p;
@@ -58,10 +59,7 @@ describe('handlers/post', function() {
         expect(postsDB.find.callCount).to.equal(1);
         var call = postsDB.find.getCall(0)
         expect(call.args[0]).to.deep.equal({
-          slug: 'hello',
-          year: undefined,
-          month: undefined,
-          day: undefined
+          file: 'hello.md'
         });
       });
       

@@ -19,7 +19,7 @@ exports = module.exports = function(postsDB) {
       day: page.params.day
     }
     
-    postsDB.find(q, function(err, post) {
+    postsDB.find(page.context, function(err, post) {
       page.locals.title = post.title;
       page.locals.publishedAt = post.publishedAt;
       page.locals.modifiedAt = post.modifiedAt;

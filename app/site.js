@@ -74,7 +74,7 @@ exports = module.exports = function(
         
         // TODO: make sure these are in right timezone
         url = '/' + [ year, month, day, slug + '.html' ].join('/');
-        self.add(url);
+        self.add(url, el.context);
       }
       
       done();
