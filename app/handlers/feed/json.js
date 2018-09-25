@@ -83,10 +83,10 @@ exports = module.exports = function() {
       
       item.url = linkto(post, feed);
       if (post.locals.publishedAt) { item.date_published = post.locals.publishedAt.toISOString().substring(0,19)+'Z'; }
-      if (post.locals.modifiedAt) { item.date_modified = post.locals.modifiedAt.toISOString().substring(0,19)+'Z'; }
+      if (post.locals.updatedAt) { item.date_modified = post.locals.updatedAt.toISOString().substring(0,19)+'Z'; }
       
       // TODO: convert content to text, stripping links, headings, etc
-      item.content_text = post.content;
+      //item.content_text = post.content;
       // TODO: content_html
       
       // TODO: author
