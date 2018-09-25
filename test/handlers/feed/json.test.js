@@ -34,7 +34,8 @@ describe('handlers/feed/json', function() {
                 locals: {
                   title: 'Hello, World',
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
-                }
+                },
+                content: 'Hello, world! How are you today?'
               }
             ];
           })
@@ -55,7 +56,8 @@ describe('handlers/feed/json', function() {
           '      "id": "http://www.example.com/blog/2003/12/13/hello-world/",',
           '      "title": "Hello, World",',
           '      "url": "http://www.example.com/blog/2003/12/13/hello-world/",',
-          '      "date_published": "2003-12-13T18:30:02Z"',
+          '      "date_published": "2003-12-13T18:30:02Z",',
+          '      "content_html": "<p>Hello, world! How are you today?</p>"',
           '    }',
           '  ]',
           '}'
@@ -130,7 +132,8 @@ describe('handlers/feed/json', function() {
           '      "title": "Atom draft-07 snapshot",',
           '      "url": "http://example.org/2005/04/02/atom",',
           '      "date_published": "2003-12-13T18:30:02Z",',
-          '      "date_modified": "2005-07-31T12:29:29Z"',
+          '      "date_modified": "2005-07-31T12:29:29Z",',
+          '      "content_html": "<p><em>Update: The Atom draft is finished.</em></p>"',
           '    }',
           '  ]',
           '}'

@@ -73,14 +73,19 @@ exports = module.exports = function() {
    
     
     json.items = [];
-    for (i = 0, len = posts.length; i < len; i++) {
+    (function iter(i, err) {
+      if (err) { return next(err); }
+      
       post = posts[i];
+      if (!post) {
+        feed.write(JSON.stringify(json, null, 2));
+        feed.end();
+        return;
+      } // done
     
       item = {};
       item.id = post.locals.id || post.canonicalURL || post.url;
       if (post.locals.title) { item.title = post.locals.title; }
-      if (post.locals.tags) { item.tags = post.locals.tags; }
-      
       item.url = linkto(post, feed);
       if (post.locals.publishedAt) { item.date_published = post.locals.publishedAt.toISOString().substring(0,19)+'Z'; }
       if (post.locals.updatedAt) { item.date_modified = post.locals.updatedAt.toISOString().substring(0,19)+'Z'; }
@@ -89,15 +94,19 @@ exports = module.exports = function() {
       //item.content_text = post.content;
       // TODO: content_html
       
+      // TODO: if (post.locals.tags) { item.tags = post.locals.tags; }
+      
       // TODO: author
       // TODO: tags
       // TODO: external_url
       
-      json.items.push(item);
-    };
-    
-    feed.write(JSON.stringify(json, null, 2));
-    feed.end();
+      site.render(post.content, { engine: 'md' }, function(err, html) {
+        if (err) { return iter(i + 1, err); }
+        item.content_html = html.trim();
+        json.items.push(item);
+        iter(i + 1);
+      }, false);
+    })(0);
   };
 };
 
