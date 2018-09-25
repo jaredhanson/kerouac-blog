@@ -91,7 +91,7 @@ exports = module.exports = function() {
       
       // TODO: author
       // TODO: tags
-      
+      // TODO: external_url
       
       json.items.push(item);
     };

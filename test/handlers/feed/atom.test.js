@@ -63,7 +63,7 @@ describe('handlers/feed/atom', function() {
       });
     }); // with one post
   
-    describe('with one post in a configured feed', function() {
+    describe('generating a feed with the extensive, single-entry example in RFC 4287', function() {
       var site = kerouac();
       site.set('title', 'dive into mark');
       site.set('description', 'A lot of effort went into making this effortless');
@@ -89,7 +89,18 @@ describe('handlers/feed/atom', function() {
                 locals: {
                   id: 'tag:example.org,2003:3.2397',
                   title: 'Atom draft-07 snapshot',
+                  author: {
+                    email: 'f8dy@example.com',
+                    name: 'Mark Pilgrim',
+                    url: 'http://example.org/'
+                  },
+                  contributors: [
+                    { name: 'Sam Ruby' },
+                    { name: 'Joe Gregorio' }
+                  ],
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
+                  updatedAt: new Date('2005-07-31T12:29:29.000Z'),
+                  content: 'Update: The Atom draft is finished.\n'
                 }
               }
             ];
@@ -114,6 +125,18 @@ describe('handlers/feed/atom', function() {
           '    <title>Atom draft-07 snapshot</title>',
           '    <link href=\"http://www.example.com/blog/2005/04/02/atom\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
+          '    <updated>2005-07-31T12:29:29Z</updated>',
+          '    <author>',
+          '      <name>Mark Pilgrim</name>',
+          '      <uri>http://example.org/</uri>',
+          '      <email>f8dy@example.com</email>',
+          '    </author>',
+          '    <contributor>',
+          '      <name>Sam Ruby</name>',
+          '    </contributor>',
+          '    <contributor>',
+          '      <name>Joe Gregorio</name>',
+          '    </contributor>',
           '  </entry>',
           '</feed>',
           ''
@@ -121,7 +144,7 @@ describe('handlers/feed/atom', function() {
       
         expect(page.body).to.equal(expected);
       });
-    }); // with one post in a configured feed
+    }); // generating a feed with the extensive, single-entry example in RFC 4287
     
   }); // handler
   

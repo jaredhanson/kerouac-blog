@@ -19,7 +19,7 @@ exports = module.exports = function() {
   
   return function atomFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, entry, val, i, len;
+      , home, posts, post, entry, el, val, i, len, j, jlen;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);
@@ -69,11 +69,23 @@ exports = module.exports = function() {
       if (post.locals.title) { entry.e('title', post.locals.title); }
       entry.e('link', { href: linkto(post, feed) });
       if (post.locals.publishedAt) { entry.e('published', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
-      // TODO: updated
-      // TODO: author
-      // TODO: content
+      if (post.locals.updatedAt) { entry.e('updated', post.locals.updatedAt.toISOString().substring(0,19)+'Z'); }
+      if (post.locals.author) {
+        el = entry.e('author');
+        if (post.locals.author.name) { el.e('name', post.locals.author.name); }
+        if (post.locals.author.url) { el.e('uri', post.locals.author.url); }
+        if (post.locals.author.email) { el.e('email', post.locals.author.email); }
+      }
+      if (post.locals.contributors) {
+        for (j = 0, jlen = post.locals.contributors.length; j < jlen; j++) {
+          el = entry.e('contributor');
+          if (post.locals.contributors[j].name) { el.e('name', post.locals.contributors[j].name); }
+          if (post.locals.contributors[j].url) { el.e('uri', post.locals.contributors[j].url); }
+          if (post.locals.contributors[j].email) { el.e('email', post.locals.contributors[j].email); }
+        }
+      }
       
-      // TODO: external_url
+      // TODO: content
     };
     
     var xml = xml.end({ pretty: true });
