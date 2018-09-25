@@ -38,7 +38,7 @@ describe('LocalPostsDatabase', function() {
           ],
           publishedAt: new Date('2003-12-13T12:29:29.000Z'),
           updatedAt: new Date('2005-07-31T12:29:29.000Z'),
-          content: 'Update: The Atom draft is finished.\n'
+          content: '_Update: The Atom draft is finished._\n'
         });
       });
     }); // a post containing metadata from the extensive, single-entry example in RFC 4287

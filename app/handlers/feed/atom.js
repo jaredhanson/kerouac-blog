@@ -32,6 +32,8 @@ exports = module.exports = function() {
       return (p.meta && p.meta.post == true);
     });
     
+    // TODO: sort posts by date
+    
     
     var xml = builder.create('feed', { version: '1.0', encoding: 'UTF-8' });
     xml.a('xmlns', 'http://www.w3.org/2005/Atom')
@@ -53,15 +55,15 @@ exports = module.exports = function() {
     xml.e('link', { rel: 'self', type: 'application/atom+xml', href: linkto(feed, feed) });
     
     // TODO: Author
+    // TODO: contributors
     // TODO: rights
     // TODO: generator
+    // TODO: icon, logo (get from manifest?)
     
     
     for (i = 0, len = posts.length; i < len; i++) {
       post = posts[i];
     
-      // TODO: id
-      // TODO: updated
       // TODO: summary
     
       entry = xml.e('entry');
@@ -85,7 +87,16 @@ exports = module.exports = function() {
         }
       }
       
+      // TODO: category
+      
       // TODO: content
+      //console.log('RENDER');
+      //console.log(post)
+      //console.log(post.content)
+      //site.render(post.content, { engine: 'md' }, function(err, html) {
+      //  console.log(err);
+      //  console.log(html);
+      //}, false);
     };
     
     var xml = xml.end({ pretty: true });

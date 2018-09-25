@@ -102,8 +102,8 @@ describe('handlers/feed/atom', function() {
                   ],
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
                   updatedAt: new Date('2005-07-31T12:29:29.000Z'),
-                  content: 'Update: The Atom draft is finished.\n'
-                }
+                },
+                content: '_Update: The Atom draft is finished._\n'
               }
             ];
           })
