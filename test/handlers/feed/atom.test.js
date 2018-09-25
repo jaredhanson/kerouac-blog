@@ -75,18 +75,18 @@ describe('handlers/feed/atom', function() {
       before(function(done) {
         chai.kerouac.handler(factory())
           .page(function(page) {
-            page.canonicalURL = 'http://www.example.com/blog/feed.atom';
+            page.canonicalURL = 'http://example.org/feed.atom';
             
             page.site = site;
             page.site.pages = [
               { url: '/',
-                canonicalURL: 'http://www.example.com/blog/',
+                canonicalURL: 'http://example.org/',
                 meta: { home: true },
                 locals: {
                 }
               },
               { url: '/2005/04/02/atom',
-                canonicalURL: 'http://www.example.com/blog/2005/04/02/atom',
+                canonicalURL: 'http://example.org/2005/04/02/atom',
                 meta: { post: true },
                 locals: {
                   id: 'tag:example.org,2003:3.2397',
@@ -120,12 +120,12 @@ describe('handlers/feed/atom', function() {
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
           '  <title>dive into mark</title>',
           '  <subtitle>A lot of effort went into making this effortless</subtitle>',
-          '  <link rel="alternate" type="text/html" href="http://www.example.com/blog/"/>',
-          '  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
+          '  <link rel="alternate" type="text/html" href="http://example.org/"/>',
+          '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
           '  <entry>',
           '    <id>tag:example.org,2003:3.2397</id>',
           '    <title>Atom draft-07 snapshot</title>',
-          '    <link href=\"http://www.example.com/blog/2005/04/02/atom\"/>',
+          '    <link href=\"http://example.org/2005/04/02/atom\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
           '    <updated>2005-07-31T12:29:29Z</updated>',
           '    <author>',
