@@ -96,10 +96,13 @@ exports = module.exports = function() {
         item.e('author', post.locals.author.email);
       }
       
-      // TODO: description
       // TODO: category
       
-      iter(i + 1);
+      site.render(post.content, { engine: 'md' }, function(err, html) {
+        if (err) { return iter(i + 1, err); }
+        item.e('description', html)
+        iter(i + 1);
+      }, false);
     })(0);
   };
 };

@@ -34,7 +34,8 @@ describe('handlers/feed/rss', function() {
                 locals: {
                   title: 'Hello, World',
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
-                }
+                },
+                content: 'Hello, world! How are you today?'
               }
             ];
           })
@@ -55,6 +56,8 @@ describe('handlers/feed/rss', function() {
           '      <title>Hello, World</title>',
           '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
           '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
+          '      <description>&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;',
+          '</description>',
           '    </item>',
           '  </channel>',
           '</rss>',
@@ -119,6 +122,8 @@ describe('handlers/feed/rss', function() {
           '      <title>Star City</title>',
           '      <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp</link>',
           '      <pubDate>Tue, 03 Jun 2003 09:39:21 GMT</pubDate>',
+          '      <description>&lt;p&gt;How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia&amp;#39;s &lt;a href=&quot;http://howe.iki.rssi.ru/GCTC/gctc_e.htm&quot;&gt;Star City&lt;/a&gt;.&lt;/p&gt;',
+          '</description>',
           '    </item>',
           '  </channel>',
           '</rss>',
@@ -194,6 +199,8 @@ describe('handlers/feed/rss', function() {
           '      <link>http://example.org/2005/04/02/atom</link>',
           '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
           '      <author>f8dy@example.com</author>',
+          '      <description>&lt;p&gt;&lt;em&gt;Update: The Atom draft is finished.&lt;/em&gt;&lt;/p&gt;',
+          '</description>',
           '    </item>',
           '  </channel>',
           '</rss>',
