@@ -94,7 +94,8 @@ describe('handlers/feed/rss', function() {
                   id: 'http://liftoff.msfc.nasa.gov/2003/06/03.html#item573',
                   title: 'Star City',
                   publishedAt: new Date('2003-06-03T09:39:21.000Z'),
-                }
+                },
+                content: "How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's [Star City](http://howe.iki.rssi.ru/GCTC/gctc_e.htm).\n"
               }
             ];
           })

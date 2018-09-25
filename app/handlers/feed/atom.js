@@ -71,8 +71,6 @@ exports = module.exports = function() {
         feed.end();
         return;
       } // done
-      
-      post = posts[i];
     
       // TODO: summary
     
@@ -98,6 +96,7 @@ exports = module.exports = function() {
       }
       
       // TODO: category
+      // TODO: source
       
       site.render(post.content, { engine: 'md' }, function(err, html) {
         if (err) { return iter(i + 1, err); }

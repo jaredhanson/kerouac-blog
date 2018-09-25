@@ -70,8 +70,16 @@ exports = module.exports = function() {
     // TODO: image
     
     
-    for (i = 0, len = posts.length; i < len; i++) {
+    (function iter(i, err) {
+      if (err) { return next(err); }
+      
       post = posts[i];
+      if (!post) {
+        xml = xml.end({ pretty: true });
+        feed.write(xml);
+        feed.end();
+        return;
+      } // done
     
       item = chan.e('item');
       if (post.locals.id) {
@@ -90,11 +98,9 @@ exports = module.exports = function() {
       
       // TODO: description
       // TODO: category
-    };
-    
-    var xml = xml.end({ pretty: true });
-    feed.write(xml);
-    feed.end();
+      
+      iter(i + 1);
+    })(0);
   };
 };
 
