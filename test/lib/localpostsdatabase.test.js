@@ -17,7 +17,7 @@ describe('LocalPostsDatabase', function() {
       var post;
   
       before(function(done) {
-        db.find({ file: 'atom-extensive.md' }, function(err, p) {
+        db.find({ file: 'atom-extensive-example.md' }, function(err, p) {
           if (err) { return done(err); }
           post = p;
           return done();
@@ -42,6 +42,28 @@ describe('LocalPostsDatabase', function() {
         });
       });
     }); // a post containing metadata from the extensive, single-entry example in RFC 4287
+    
+    describe('a post containing metadata from the sample in the RSS 2.0 Specification', function() {
+      var post;
+  
+      before(function(done) {
+        db.find({ file: 'rss-sample.md' }, function(err, p) {
+          if (err) { return done(err); }
+          post = p;
+          return done();
+        });
+      });
+      
+      it('should yield post', function() {
+        console.log(post);
+        
+        expect(post).to.deep.equal({
+          title: 'Star City',
+          publishedAt: new Date('2003-06-03T09:39:21.000Z'),
+          content: "How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's [Star City](http://howe.iki.rssi.ru/GCTC/gctc_e.htm).\n"
+        });
+      });
+    }); // a post containing metadata from the sample in the RSS 2.0 Specification
     
   }); // #find
   

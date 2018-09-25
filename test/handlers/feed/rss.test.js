@@ -69,8 +69,8 @@ describe('handlers/feed/rss', function() {
       // https://cyber.harvard.edu/rss/examples/rss2sample.xml
       
       var site = kerouac();
-      site.set('title', 'dive into mark');
-      site.set('description', 'A lot of effort went into making this effortless');
+      site.set('title', 'Liftoff News');
+      site.set('description', 'Liftoff to Space Exploration.');
       
       var page, err;
 
@@ -82,17 +82,17 @@ describe('handlers/feed/rss', function() {
             page.site = site;
             page.site.pages = [
               { url: '/',
-                canonicalURL: 'http://www.example.com/blog/',
+                canonicalURL: 'http://liftoff.msfc.nasa.gov/',
                 meta: { home: true },
                 locals: {
                 }
               },
-              { url: '/2003/12/13/hello-world/',
-                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
+              { url: '/news/2003/news-starcity.asp',
+                canonicalURL: 'http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp',
                 meta: { post: true },
                 locals: {
-                  id: 'tag:example.org,2003:3.2397',
-                  title: 'Hello, World',
+                  id: 'http://liftoff.msfc.nasa.gov/2003/06/03.html#item573',
+                  title: 'Star City',
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
                 }
               }
@@ -110,13 +110,13 @@ describe('handlers/feed/rss', function() {
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<rss version=\"2.0\">',
           '  <channel>',
-          '    <title>dive into mark</title>',
-          '    <description>A lot of effort went into making this effortless</description>',
-          '    <link>http://www.example.com/blog/</link>',
+          '    <title>Liftoff News</title>',
+          '    <description>Liftoff to Space Exploration.</description>',
+          '    <link>http://liftoff.msfc.nasa.gov/</link>',
           '    <item>',
-          '      <guid isPermaLink="false">tag:example.org,2003:3.2397</guid>',
-          '      <title>Hello, World</title>',
-          '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '      <guid isPermaLink="false">http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</guid>',
+          '      <title>Star City</title>',
+          '      <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp</link>',
           '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
           '    </item>',
           '  </channel>',
