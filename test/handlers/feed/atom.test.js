@@ -64,6 +64,8 @@ describe('handlers/feed/atom', function() {
     }); // with one post
   
     describe('generating a feed with the extensive, single-entry example in RFC 4287', function() {
+      // https://tools.ietf.org/html/rfc4287#section-1.1
+      
       var site = kerouac();
       site.set('title', 'dive into mark');
       site.set('description', 'A lot of effort went into making this effortless');

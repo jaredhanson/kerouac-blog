@@ -65,7 +65,9 @@ describe('handlers/feed/rss', function() {
       });
     }); // with one post
     
-    describe('with one post in a configured feed', function() {
+    describe('generating a feed with the sample from RSS 2.0 Specification', function() {
+      // https://cyber.harvard.edu/rss/examples/rss2sample.xml
+      
       var site = kerouac();
       site.set('title', 'dive into mark');
       site.set('description', 'A lot of effort went into making this effortless');
