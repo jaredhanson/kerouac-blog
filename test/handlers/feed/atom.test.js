@@ -33,7 +33,8 @@ describe('handlers/feed/atom', function() {
                 locals: {
                   title: 'Hello, World',
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
-                }
+                },
+                content: 'Hello, world! How are you today?'
               }
             ];
           })
@@ -54,6 +55,8 @@ describe('handlers/feed/atom', function() {
           '    <title>Hello, World</title>',
           '    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
+          '    <content type="html">&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;',
+          '</content>',
           '  </entry>',
           '</feed>',
           ''
@@ -139,6 +142,8 @@ describe('handlers/feed/atom', function() {
           '    <contributor>',
           '      <name>Joe Gregorio</name>',
           '    </contributor>',
+          '    <content type="html">&lt;p&gt;&lt;em&gt;Update: The Atom draft is finished.&lt;/em&gt;&lt;/p&gt;',
+          '</content>',
           '  </entry>',
           '</feed>',
           ''

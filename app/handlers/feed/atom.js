@@ -61,7 +61,17 @@ exports = module.exports = function() {
     // TODO: icon, logo (get from manifest?)
     
     
-    for (i = 0, len = posts.length; i < len; i++) {
+    (function iter(i, err) {
+      if (err) { return next(err); }
+      
+      post = posts[i];
+      if (!post) {
+        xml = xml.end({ pretty: true });
+        feed.write(xml);
+        feed.end();
+        return;
+      } // done
+      
       post = posts[i];
     
       // TODO: summary
@@ -89,19 +99,12 @@ exports = module.exports = function() {
       
       // TODO: category
       
-      // TODO: content
-      //console.log('RENDER');
-      //console.log(post)
-      //console.log(post.content)
-      //site.render(post.content, { engine: 'md' }, function(err, html) {
-      //  console.log(err);
-      //  console.log(html);
-      //}, false);
-    };
-    
-    var xml = xml.end({ pretty: true });
-    feed.write(xml);
-    feed.end();
+      site.render(post.content, { engine: 'md' }, function(err, html) {
+        if (err) { return iter(i + 1, err); }
+        entry.e('content', { type: 'html' }, html)
+        iter(i + 1);
+      }, false);
+    })(0);
   };
 };
 
