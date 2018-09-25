@@ -100,7 +100,7 @@ exports = module.exports = function() {
       
       site.render(post.content, { engine: 'md' }, function(err, html) {
         if (err) { return iter(i + 1, err); }
-        entry.e('content', { type: 'html' }, html)
+        entry.e('content', { type: 'html' }, html.trim())
         iter(i + 1);
       }, false);
     })(0);
