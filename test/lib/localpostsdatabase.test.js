@@ -55,8 +55,6 @@ describe('LocalPostsDatabase', function() {
       });
       
       it('should yield post', function() {
-        console.log(post);
-        
         expect(post).to.deep.equal({
           title: 'Star City',
           publishedAt: new Date('2003-06-03T09:39:21.000Z'),
