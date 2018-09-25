@@ -84,9 +84,11 @@ exports = module.exports = function() {
       if (post.locals.title) { item.e('title', post.locals.title); }
       item.e('link', linkto(post, feed));
       if (post.locals.publishedAt) { item.e('pubDate', post.locals.publishedAt.toUTCString()); }
+      if (post.locals.author && post.locals.author.email) {
+        item.e('author', post.locals.author.email);
+      }
       
       // TODO: description
-      // TODO: author
       // TODO: category
     };
     

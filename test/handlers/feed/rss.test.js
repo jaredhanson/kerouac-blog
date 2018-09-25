@@ -192,6 +192,7 @@ describe('handlers/feed/rss', function() {
           '      <title>Atom draft-07 snapshot</title>',
           '      <link>http://example.org/2005/04/02/atom</link>',
           '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
+          '      <author>f8dy@example.com</author>',
           '    </item>',
           '  </channel>',
           '</rss>',
