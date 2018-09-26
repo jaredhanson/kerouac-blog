@@ -49,8 +49,8 @@ describe('handlers/feed/rdf', function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">',
-          '  <channel/>',
-          '  <item>',
+          '  <channel rdf:about="http://www.example.com/blog/feed.rdf"/>',
+          '  <item rdf:about="http://www.example.com/blog/2003/12/13/hello-world/">',
           '    <title>Hello, World</title>',
           '    <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
           '    <dc:date>2003-12-13T18:30:02Z</dc:date>',
@@ -75,10 +75,16 @@ describe('handlers/feed/rdf', function() {
       before(function(done) {
         chai.kerouac.handler(factory())
           .page(function(page) {
-            page.canonicalURL = 'http://www.example.com/blog/feed.rdf';
+            page.canonicalURL = 'http://www.xml.com/xml/news.rss';
             
             page.site = site;
             page.site.pages = [
+              { url: '/',
+                canonicalURL: 'http://xml.com/pub',
+                meta: { home: true },
+                locals: {
+                }
+              },
               { url: '/2003/12/13/hello-world/',
                 canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
                 meta: { post: true },
@@ -100,11 +106,12 @@ describe('handlers/feed/rdf', function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">',
-          '  <channel>',
+          '  <channel rdf:about="http://www.xml.com/xml/news.rss">',
           '    <title>XML.com</title>',
           '    <description>XML.com features a rich mix of information and services for the XML community.</description>',
+          '    <link>http://xml.com/pub</link>',
           '  </channel>',
-          '  <item>',
+          '  <item rdf:about="http://www.example.com/blog/2003/12/13/hello-world/">',
           '    <title>Hello, World</title>',
           '    <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
           '    <dc:date>2003-12-13T18:30:02Z</dc:date>',

@@ -47,7 +47,7 @@ exports = module.exports = function() {
     xml.a('xmlns:rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
     xml.a('xmlns:dc', 'http://purl.org/dc/elements/1.1/')
     
-    var chan = xml.e('channel');
+    var chan = xml.e('channel', { 'rdf:about': linkto(feed, feed) });
     
     val = site.get('title');
     if (val) {
@@ -58,12 +58,18 @@ exports = module.exports = function() {
       chan.e('description', val);
     }
     
-    // TODO: Get the blog index and set as `link` element
+    if (home) {
+      chan.e('link', linkto(home, feed));
+    }
+    
+    // TODO: image
+    // TOOD: Include item seq in channel.
+    
     
     for (i = 0, len = posts.length; i < len; i++) {
       post = posts[i];
     
-      item = xml.e('item');
+      item = xml.e('item', { 'rdf:about': post.canonicalURL });
       if (post.locals.title) { item.e('title', post.locals.title); }
       item.e('link', linkto(post, feed));
       if (post.locals.publishedAt) { item.e('dc:date', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
