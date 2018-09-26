@@ -85,11 +85,11 @@ describe('handlers/feed/rdf', function() {
                 locals: {
                 }
               },
-              { url: '/2003/12/13/hello-world/',
-                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
+              { url: '/2000/08/09/xslt/xslt.html',
+                canonicalURL: 'http://xml.com/pub/2000/08/09/xslt/xslt.html',
                 meta: { post: true },
                 locals: {
-                  title: 'Hello, World',
+                  title: 'Processing Inclusions with XSLT',
                   publishedAt: new Date('2003-12-13T18:30:02Z'),
                 }
               }
@@ -111,9 +111,9 @@ describe('handlers/feed/rdf', function() {
           '    <description>XML.com features a rich mix of information and services for the XML community.</description>',
           '    <link>http://xml.com/pub</link>',
           '  </channel>',
-          '  <item rdf:about="http://www.example.com/blog/2003/12/13/hello-world/">',
-          '    <title>Hello, World</title>',
-          '    <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '  <item rdf:about="http://xml.com/pub/2000/08/09/xslt/xslt.html">',
+          '    <title>Processing Inclusions with XSLT</title>',
+          '    <link>http://xml.com/pub/2000/08/09/xslt/xslt.html</link>',
           '    <dc:date>2003-12-13T18:30:02Z</dc:date>',
           '  </item>',
           '</rdf:RDF>',
