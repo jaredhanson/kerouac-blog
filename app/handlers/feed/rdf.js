@@ -28,7 +28,7 @@ exports = module.exports = function() {
   
   return function rdfFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, item, val, i, len;
+      , home, posts, post, seq, item, val, i, len;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);
@@ -61,6 +61,13 @@ exports = module.exports = function() {
     if (home) {
       chan.e('link', linkto(home, feed));
     }
+    
+    seq = chan.e('items').e('rdf:Seq');
+    for (i = 0, len = posts.length; i < len; i++) {
+      post = posts[i];
+      seq.e('rdf:li', { resource: post.canonicalURL });
+    }
+    
     
     // TODO: image
     // TOOD: Include item seq in channel.
