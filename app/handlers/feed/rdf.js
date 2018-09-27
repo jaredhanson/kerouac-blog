@@ -70,7 +70,6 @@ exports = module.exports = function() {
     
     
     // TODO: image
-    // TOOD: Include item seq in channel.
     
     
     for (i = 0, len = posts.length; i < len; i++) {

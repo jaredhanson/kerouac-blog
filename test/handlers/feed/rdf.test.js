@@ -69,7 +69,7 @@ describe('handlers/feed/rdf', function() {
       });
     }); // with one post
     
-    describe('generating a feed with the sample from RSS 1.0 Specification', function() {
+    describe('generating a feed with basid document example from RSS 1.0 Specification', function() {
       // http://web.resource.org/rss/1.0/spec#s4.1
       
       var site = kerouac();
@@ -96,7 +96,6 @@ describe('handlers/feed/rdf', function() {
                 meta: { post: true },
                 locals: {
                   title: 'Processing Inclusions with XSLT',
-                  publishedAt: new Date('2003-12-13T18:30:02Z'),
                 }
               }
             ];
@@ -125,7 +124,6 @@ describe('handlers/feed/rdf', function() {
           '  <item rdf:about="http://xml.com/pub/2000/08/09/xslt/xslt.html">',
           '    <title>Processing Inclusions with XSLT</title>',
           '    <link>http://xml.com/pub/2000/08/09/xslt/xslt.html</link>',
-          '    <dc:date>2003-12-13T18:30:02Z</dc:date>',
           '  </item>',
           '</rdf:RDF>',
           ''
@@ -133,7 +131,7 @@ describe('handlers/feed/rdf', function() {
       
         expect(page.body).to.equal(expected);
       });
-    }); // generating a feed with the sample from RSS 1.0 Specification
+    }); // generating a feed with basid document example from RSS 1.0 Specification
     
   }); // handler
   
