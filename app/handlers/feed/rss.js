@@ -28,7 +28,7 @@ exports = module.exports = function() {
   
   return function rssFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, item, val, i, len;
+      , home, posts, post, xml, chan, item, val, i, len;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);
@@ -42,10 +42,9 @@ exports = module.exports = function() {
     });
     
     
-    var xml = builder.create('rss', { version: '1.0', encoding: 'UTF-8' });
+    xml = builder.create('rss', { version: '1.0', encoding: 'UTF-8' });
     xml.a('version', '2.0');
-    
-    var chan = xml.e('channel')
+    chan = xml.e('channel')
     
     val = site.get('title');
     if (val) {

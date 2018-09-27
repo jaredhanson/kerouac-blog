@@ -19,7 +19,7 @@ exports = module.exports = function() {
   
   return function atomFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, entry, el, val, i, len, j, jlen;
+      , home, posts, post, xml, entry, el, val, i, len, j, jlen;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);
@@ -35,7 +35,7 @@ exports = module.exports = function() {
     // TODO: sort posts by date
     
     
-    var xml = builder.create('feed', { version: '1.0', encoding: 'UTF-8' });
+    xml = builder.create('feed', { version: '1.0', encoding: 'UTF-8' });
     xml.a('xmlns', 'http://www.w3.org/2005/Atom')
     
     val = site.get('title');
