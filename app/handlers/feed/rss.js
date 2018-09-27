@@ -28,7 +28,8 @@ exports = module.exports = function() {
   
   return function rssFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, xml, chan, item, val, i, len;
+      , home, posts, post
+      , xml, chan, item, val, i, len;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);

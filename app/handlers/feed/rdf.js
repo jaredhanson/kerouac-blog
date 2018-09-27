@@ -28,7 +28,8 @@ exports = module.exports = function() {
   
   return function rdfFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, seq, item, val, i, len;
+      , home, posts, post
+      , xml, chan, seq, item, val, i, len;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);
@@ -42,12 +43,11 @@ exports = module.exports = function() {
     });
     
     
-    var xml = builder.create('rdf:RDF', { version: '1.0', encoding: 'UTF-8' });
+    xml = builder.create('rdf:RDF', { version: '1.0', encoding: 'UTF-8' });
     xml.a('xmlns', 'http://purl.org/rss/1.0/')
     xml.a('xmlns:rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
     xml.a('xmlns:dc', 'http://purl.org/dc/elements/1.1/')
-    
-    var chan = xml.e('channel', { 'rdf:about': linkto(feed, feed) });
+    chan = xml.e('channel', { 'rdf:about': linkto(feed, feed) });
     
     val = site.get('title');
     if (val) {
@@ -82,7 +82,7 @@ exports = module.exports = function() {
       if (post.locals.publishedAt) { item.e('dc:date', post.locals.publishedAt.toISOString().substring(0,19)+'Z'); }
     };
     
-    var xml = xml.end({ pretty: true });
+    xml = xml.end({ pretty: true });
     feed.write(xml);
     feed.end();
   };

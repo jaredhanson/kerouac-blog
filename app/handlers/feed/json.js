@@ -33,7 +33,8 @@ exports = module.exports = function() {
   
   return function jsonFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, item, val, i, len;
+      , home, posts, post
+      , json, item, val, i, len;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);
@@ -47,7 +48,7 @@ exports = module.exports = function() {
     });
     
     
-    var json = {};
+    json = {};
     json.version = 'https://jsonfeed.org/version/1';
     
     val = site.get('title');

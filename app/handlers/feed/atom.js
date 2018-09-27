@@ -19,7 +19,8 @@ exports = module.exports = function() {
   
   return function atomFeed(feed, next) {
     var site = feed.site
-      , home, posts, post, xml, entry, el, val, i, len, j, jlen;
+      , home, posts, post
+      , xml, entry, el, val, i, len, j, jlen;
     
     home = site.pages.filter(function(p) {
       return (p.meta && p.meta.home == true);
