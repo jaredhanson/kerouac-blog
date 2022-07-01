@@ -22,8 +22,8 @@ describe('handlers/feed/json', function() {
       var page, err;
 
       before(function(done) {
-        chai.kerouac.handler(factory())
-          .page(function(page) {
+        chai.kerouac.page(factory())
+          .request(function(page) {
             page.canonicalURL = 'http://www.example.com/blog/feed.json';
           
             page.site = site;
@@ -39,11 +39,11 @@ describe('handlers/feed/json', function() {
               }
             ];
           })
-          .end(function(p) {
-            page = p;
+          .finish(function() {
+            page = this;
             done();
           })
-          .dispatch();
+          .generate();
       });
   
       it('should write feed', function() {
@@ -77,8 +77,8 @@ describe('handlers/feed/json', function() {
       var page, err;
 
       before(function(done) {
-        chai.kerouac.handler(factory())
-          .page(function(page) {
+        chai.kerouac.page(factory())
+          .request(function(page) {
             page.canonicalURL = 'http://example.org/feed.json';
             
             page.site = site;
@@ -111,11 +111,11 @@ describe('handlers/feed/json', function() {
               }
             ];
           })
-          .end(function(p) {
-            page = p;
+          .finish(function() {
+            page = this;
             done();
           })
-          .dispatch();
+          .generate();
       });
   
       it('should write feed', function() {
