@@ -22,8 +22,8 @@ describe('handlers/feed/rdf', function() {
       var page, err;
 
       before(function(done) {
-        chai.kerouac.handler(factory())
-          .page(function(page) {
+        chai.kerouac.page(factory())
+          .request(function(page) {
             page.canonicalURL = 'http://www.example.com/blog/feed.rdf';
             
             page.site = site;
@@ -38,11 +38,11 @@ describe('handlers/feed/rdf', function() {
               }
             ];
           })
-          .end(function(p) {
-            page = p;
+          .finish(function() {
+            page = this;
             done();
           })
-          .dispatch();
+          .generate();
       });
   
       it('should write feed', function() {
@@ -79,8 +79,8 @@ describe('handlers/feed/rdf', function() {
       var page, err;
 
       before(function(done) {
-        chai.kerouac.handler(factory())
-          .page(function(page) {
+        chai.kerouac.page(factory())
+          .request(function(page) {
             page.canonicalURL = 'http://www.xml.com/xml/news.rss';
             
             page.site = site;
@@ -100,11 +100,11 @@ describe('handlers/feed/rdf', function() {
               }
             ];
           })
-          .end(function(p) {
-            page = p;
+          .finish(function() {
+            page = this;
             done();
           })
-          .dispatch();
+          .generate();
       });
   
       it('should write feed', function() {
@@ -143,8 +143,8 @@ describe('handlers/feed/rdf', function() {
       var page, err;
 
       before(function(done) {
-        chai.kerouac.handler(factory())
-          .page(function(page) {
+        chai.kerouac.page(factory())
+          .request(function(page) {
             page.canonicalURL = 'http://meerkat.oreillynet.com/?_fl=rss1.0';
             
             page.site = site;
@@ -164,11 +164,11 @@ describe('handlers/feed/rdf', function() {
               }
             ];
           })
-          .end(function(p) {
-            page = p;
+          .finish(function() {
+            page = this;
             done();
           })
-          .dispatch();
+          .generate();
       });
   
       it('should write feed', function() {
