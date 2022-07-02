@@ -21,6 +21,7 @@ describe('site', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
+  /*
   describe('create with one post', function() {
     function kerouac() {
       return new MockSite();
@@ -74,9 +75,11 @@ describe('site', function() {
         expect(queue._q[0]).to.equal('/2003/12/13/hello-world.html');
       });
     }); // and then binding content
-    
-  }); // create with one post
   
+  }); // create with one post
+  */
+  
+  /*
   describe('create with one post, published on date with single digit month and day', function() {
     function kerouac() {
       return new MockSite();
@@ -115,5 +118,6 @@ describe('site', function() {
     }); // and then binding content
     
   }); // create with one post, published on date with single digit month and day
+  */
   
 });
