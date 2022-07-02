@@ -99,7 +99,8 @@ exports = module.exports = function() {
       // TODO: category
       // TODO: source
       
-      site.render(post.content, { engine: 'md' }, function(err, html) {
+      //site.render(post.content, { engine: 'md' }, function(err, html) {
+      site.convert(post.content, 'md', function(err, html) {
         if (err) { return iter(i + 1, err); }
         entry.e('content', { type: 'html' }, html.trim())
         iter(i + 1);

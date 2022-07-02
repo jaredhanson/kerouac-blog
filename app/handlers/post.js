@@ -50,13 +50,23 @@ exports = module.exports = function(postsDB) {
     next();
   }
   
+  function render(page, next) {
+      //var site = page.app;
+  
+      //site.convert(page.content, page.markup, function(err, out) {
+        //page.locals.content = out;
+        page.render();
+      //});
+    }
+  
   
   return [
     initialize,
     loadPost,
     //meta,
     prerender,
-    kerouac.render()
+    //kerouac.render()
+    render
   ];
 };
 

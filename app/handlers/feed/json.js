@@ -101,7 +101,8 @@ exports = module.exports = function() {
       // TODO: tags
       // TODO: external_url
       
-      site.render(post.content, { engine: 'md' }, function(err, html) {
+      //site.render(post.content, { engine: 'md' }, function(err, html) {
+      site.convert(post.content, 'md', function(err, html) {
         if (err) { return iter(i + 1, err); }
         item.content_html = html.trim();
         json.items.push(item);

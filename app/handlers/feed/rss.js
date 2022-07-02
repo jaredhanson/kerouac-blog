@@ -98,7 +98,8 @@ exports = module.exports = function() {
       
       // TODO: category
       
-      site.render(post.content, { engine: 'md' }, function(err, html) {
+      //site.render(post.content, { engine: 'md' }, function(err, html) {
+      site.convert(post.content, 'md', function(err, html) {
         if (err) { return iter(i + 1, err); }
         item.e('description', html.trim())
         iter(i + 1);

@@ -2,7 +2,7 @@
 
 var $require = require('proxyquire');
 var sinon = require('sinon');
-var factory = require('../app/site');
+var factory = require('../lib/index');
 var MockSite = require('./mocks/site');
 var MockQueue = require('./mocks/queue');
 
@@ -25,7 +25,7 @@ describe('site', function() {
     function kerouac() {
       return new MockSite();
     }
-    var factory = $require('../app/site', { 'kerouac': kerouac });
+    var factory = $require('../lib/index', { 'kerouac': kerouac });
 
     var postsDB = {
       list: sinon.stub().yields(null, [ {
@@ -81,7 +81,7 @@ describe('site', function() {
     function kerouac() {
       return new MockSite();
     }
-    var factory = $require('../app/site', { 'kerouac': kerouac });
+    var factory = $require('../lib/index', { 'kerouac': kerouac });
 
     var postsDB = {
       list: sinon.stub().yields(null, [ {
