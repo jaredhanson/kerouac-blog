@@ -1,7 +1,7 @@
 var chai = require('chai');
 var sinon = require('sinon');
 var kerouac = require('kerouac');
-var factory = require('../../app/handlers/post');
+var factory = require('../../lib/handlers/post');
 
 
 
