@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "headmatter": "0.0.2",
-    "kerouac": "jaredhanson/kerouac",
+    "kerouac": "jaredhanson/kerouac#router",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "parse-author": "^2.0.0",
