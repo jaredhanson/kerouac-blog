@@ -1,7 +1,7 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var LocalPostsDatabase = require('../../lib/localpostsdatabase');
+var LocalPostsDatabase = require('../lib/blog');
 
 
 describe('LocalPostsDatabase', function() {
