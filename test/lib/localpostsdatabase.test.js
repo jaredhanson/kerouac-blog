@@ -74,7 +74,7 @@ describe('LocalPostsDatabase', function() {
         var posts;
     
         before(function(done) {
-          db.list(function(err, p) {
+          db.entries(function(err, p) {
             if (err) { return done(err); }
             posts = p;
             return done();
@@ -127,7 +127,7 @@ describe('LocalPostsDatabase', function() {
         var posts;
     
         before(function(done) {
-          db.list(function(err, p) {
+          db.entries(function(err, p) {
             if (err) { return done(err); }
             posts = p;
             return done();
@@ -184,7 +184,7 @@ describe('LocalPostsDatabase', function() {
         var posts;
     
         before(function(done) {
-          db.list(function(err, p) {
+          db.entries(function(err, p) {
             if (err) { return done(err); }
             posts = p;
             return done();
@@ -220,7 +220,7 @@ describe('LocalPostsDatabase', function() {
         var posts;
     
         before(function(done) {
-          db.list(function(err, p) {
+          db.entries(function(err, p) {
             if (err) { return done(err); }
             posts = p;
             return done();
@@ -260,7 +260,7 @@ describe('LocalPostsDatabase', function() {
         var posts;
     
         before(function(done) {
-          db.list(function(err, p) {
+          db.entries(function(err, p) {
             if (err) { return done(err); }
             posts = p;
             return done();
@@ -300,7 +300,7 @@ describe('LocalPostsDatabase', function() {
         var posts;
     
         before(function(done) {
-          db.list(function(err, p) {
+          db.entries(function(err, p) {
             if (err) { return done(err); }
             posts = p;
             return done();
