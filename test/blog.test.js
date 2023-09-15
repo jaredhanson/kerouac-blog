@@ -247,33 +247,24 @@ describe('Blog', function() {
         done();
       });
     }); // should yield an entry containing data from the more extensive, single-entry example in RFC 4287
-  
-  }); // #entry
-  
-  
-  describe('#find', function() {
-    var db = new Blog('test/fixtures');
     
-    describe('a post containing metadata from the sample in the RSS 2.0 Specification', function() {
-      var post;
-  
-      before(function(done) {
-        db.entry({ slug: 'rss-sample' }, function(err, p) {
-          if (err) { return done(err); }
-          post = p;
-          return done();
-        });
-      });
+    // RSS 2.0-formatted Paged Feed
+    // https://datatracker.ietf.org/doc/html/rfc5005#appendix-B
+    it('should yield an entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005', function(done) {
+      var blog = new Blog('test/fixtures');
       
-      it('should yield post', function() {
-        expect(post).to.deep.equal({
+      blog.entry({ slug: 'rss-sample' }, function(err, entry) {
+        if (err) { return done(err); }
+        
+        expect(entry).to.deep.equal({
           title: 'Star City',
           publishedAt: new Date('2003-06-03T09:39:21.000Z'),
           content: "How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's [Star City](http://howe.iki.rssi.ru/GCTC/gctc_e.htm).\n"
         });
+        done();
       });
-    }); // a post containing metadata from the sample in the RSS 2.0 Specification
-    
-  }); // #find
+    }); // should yield an entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005
+  
+  }); // #entry
   
 });
