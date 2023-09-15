@@ -21,14 +21,14 @@ describe('handlers/post', function() {
     var site = kerouac();
     
     var postsDB = {
-      find: function(){}
+      entry: function(){}
     };
     
     describe('with slug as only parameter', function() {
       var page, layout, err;
       
       before(function() {
-        sinon.stub(postsDB, 'find').yields(null, {
+        sinon.stub(postsDB, 'entry').yields(null, {
           title: 'Hello, World',
           content: 'This post was written using Markdown.',
           publishedAt: new Date(Date.UTC(2003, 11, 13, 18, 30, 2)),
@@ -37,7 +37,7 @@ describe('handlers/post', function() {
       });
     
       after(function() {
-        postsDB.find.restore();
+        postsDB.entry.restore();
       });
       
       before(function(done) {
@@ -56,8 +56,8 @@ describe('handlers/post', function() {
       });
       
       it('should find package in database', function() {
-        expect(postsDB.find.callCount).to.equal(1);
-        var call = postsDB.find.getCall(0)
+        expect(postsDB.entry.callCount).to.equal(1);
+        var call = postsDB.entry.getCall(0)
         expect(call.args[0]).to.deep.equal({
           slug: 'hello',
           year: undefined,

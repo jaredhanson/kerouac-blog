@@ -224,7 +224,7 @@ describe('Blog', function() {
     it('should yield entry', function(done) {
       var blog = new Blog('test/fixtures');
       
-      blog.find({ slug: 'atom-extensive-example' }, function(err, entry) {
+      blog.entry({ slug: 'atom-extensive-example' }, function(err, entry) {
         console.log(entry);
         console.log(err)
         
@@ -245,7 +245,7 @@ describe('Blog', function() {
       var post;
   
       before(function(done) {
-        db.find({ slug: 'atom-extensive-example' }, function(err, p) {
+        db.entry({ slug: 'atom-extensive-example' }, function(err, p) {
           if (err) { return done(err); }
           post = p;
           return done();
@@ -275,7 +275,7 @@ describe('Blog', function() {
       var post;
   
       before(function(done) {
-        db.find({ slug: 'rss-sample' }, function(err, p) {
+        db.entry({ slug: 'rss-sample' }, function(err, p) {
           if (err) { return done(err); }
           post = p;
           return done();
