@@ -18,11 +18,19 @@ describe('Blog', function() {
       blog.entries(function(err, entries) {
         if (err) { return done(err); }
         
-        expect(entries).to.deep.equal([
-          { path: '2017-09-03-hello.md', slug: 'hello', publishedAt: new Date('2017-09-03T00:00:00.000Z') },
-          { path: '2017-09-04-hello-again.md', slug: 'hello-again', publishedAt: new Date('2017-09-04T00:00:00.000Z') },
-          { path: '2018-04-22-published.md', slug: 'published', publishedAt: new Date('2018-04-26T20:09:27.000Z') }
-        ]);
+        expect(entries).to.deep.equal([ {
+          slug: 'hello',
+          publishedAt: new Date('2017-09-03T00:00:00.000Z'),
+          path: '2017-09-03-hello.md'
+        }, {
+          slug: 'hello-again',
+          publishedAt: new Date('2017-09-04T00:00:00.000Z'),
+          path: '2017-09-04-hello-again.md'
+        }, {
+          slug: 'published',
+          publishedAt: new Date('2018-04-26T20:09:27.000Z'),
+          path: '2018-04-22-published.md'
+        } ]);
         done();
       });
     });
