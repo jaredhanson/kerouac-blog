@@ -171,6 +171,29 @@ describe('Blog', function() {
       });
     }); // should yield entries named with slug format in Los Angeles timezone
     
+    it('should yield entries named with YYYY/MM-DD-slug format in UTC timezone', function(done) {
+      var blog = new Blog('test/fixtures/year');
+      
+      blog.entries(function(err, entries) {
+        if (err) { return done(err); }
+        
+        expect(entries).to.deep.equal([ {
+          slug: 'hello',
+          publishedAt: new Date('2017-09-03T00:00:00.000Z'),
+          path: '2017/09-03-hello.md'
+        }, {
+          slug: 'hello-again',
+          publishedAt: new Date('2017-09-04T00:00:00.000Z'),
+          path: '2017/09-04-hello-again.md'
+        }, {
+          slug: 'published',
+          publishedAt: new Date('2018-04-26T20:09:27.000Z'),
+          path: '2018/04-22-published.md'
+        } ]);
+        done();
+      });
+    }); // should yield entries named with YYYY/MM-DD-slug format in UTC timezone
+    
   });
   
   
@@ -228,86 +251,6 @@ describe('Blog', function() {
     }); // a post containing metadata from the sample in the RSS 2.0 Specification
     
   }); // #find
-  
-  describe('with files named by date and slug', function() {
-    
-    describe('in Los Angeles timezone', function() {
-      var db = new Blog('test/fixtures/date', 'America/Los_Angeles');
-  
-      describe('#list', function() {
-        var posts;
-    
-        before(function(done) {
-          db.entries(function(err, p) {
-            if (err) { return done(err); }
-            posts = p;
-            return done();
-          });
-        });
-    
-        it('should queue pages', function() {
-          expect(posts).to.have.length(3);
-          expect(posts[0]).to.deep.equal({
-            slug: 'hello',
-            publishedAt: new Date('2017-09-03T07:00:00.000Z'),
-            path: '2017-09-03-hello.md'
-          });
-          expect(posts[1]).to.deep.equal({
-            slug: 'hello-again',
-            publishedAt: new Date('2017-09-04T07:00:00.000Z'),
-            path: '2017-09-04-hello-again.md'
-          });
-          expect(posts[2]).to.deep.equal({
-            slug: 'published',
-            publishedAt: new Date('2018-04-26T20:09:27.000Z'),
-            path: '2018-04-22-published.md'
-          });
-        }); 
-      }); // #list
-      
-    }); // in Los Angeles timezone
-  
-  }); // with files named by date and slug
-  
-  describe('with files organized by year and named with month, day, and slug', function() {
-    
-    describe('in UTC timezone', function() {
-      var db = new Blog('test/fixtures/year');
-  
-      describe('#list', function() {
-        var posts;
-    
-        before(function(done) {
-          db.entries(function(err, p) {
-            if (err) { return done(err); }
-            posts = p;
-            return done();
-          });
-        });
-    
-        it('should queue pages', function() {
-          expect(posts).to.have.length(3);
-          expect(posts[0]).to.deep.equal({
-            slug: 'hello',
-            publishedAt: new Date('2017-09-03T00:00:00.000Z'),
-            path: '2017/09-03-hello.md'
-          });
-          expect(posts[1]).to.deep.equal({
-            slug: 'hello-again',
-            publishedAt: new Date('2017-09-04T00:00:00.000Z'),
-            path: '2017/09-04-hello-again.md'
-          });
-          expect(posts[2]).to.deep.equal({
-            slug: 'published',
-            publishedAt: new Date('2018-04-26T20:09:27.000Z'),
-            path: '2018/04-22-published.md'
-          });
-        }); 
-      }); // #list
-      
-    }); // in UTC timezone
-    
-  }); // with files organized by year and named with month, day, and slug
   
   describe('with files organized by year and month and named with day and slug', function() {
     
