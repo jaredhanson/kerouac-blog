@@ -221,39 +221,15 @@ describe('Blog', function() {
   
   describe('#entry', function() {
   
-    it('should yield entry', function(done) {
+    // A more extensive, single-entry Atom Feed Document:
+    // https://datatracker.ietf.org/doc/html/rfc4287#section-1.1
+    it('should yield an entry containing data from the more extensive, single-entry example in RFC 4287', function(done) {
       var blog = new Blog('test/fixtures');
       
       blog.entry({ slug: 'atom-extensive-example' }, function(err, entry) {
-        console.log(entry);
-        console.log(err)
-        
         if (err) { return done(err); }
         
-        console.log(entry);
-        done();
-      });
-    }); // should yield entries named with YYYY-MM-DD-slug format in UTC timezone
-  
-  }); // #entry
-  
-  
-  describe('#find', function() {
-    var db = new Blog('test/fixtures');
-    
-    describe('a post containing metadata from the extensive, single-entry example in RFC 4287', function() {
-      var post;
-  
-      before(function(done) {
-        db.entry({ slug: 'atom-extensive-example' }, function(err, p) {
-          if (err) { return done(err); }
-          post = p;
-          return done();
-        });
-      });
-      
-      it('should yield post', function() {
-        expect(post).to.deep.equal({
+        expect(entry).to.deep.equal({
           title: 'Atom draft-07 snapshot',
           author: {
             email: 'f8dy@example.com',
@@ -268,8 +244,15 @@ describe('Blog', function() {
           updatedAt: new Date('2005-07-31T12:29:29.000Z'),
           content: '_Update: The Atom draft is finished._\n'
         });
+        done();
       });
-    }); // a post containing metadata from the extensive, single-entry example in RFC 4287
+    }); // should yield an entry containing data from the more extensive, single-entry example in RFC 4287
+  
+  }); // #entry
+  
+  
+  describe('#find', function() {
+    var db = new Blog('test/fixtures');
     
     describe('a post containing metadata from the sample in the RSS 2.0 Specification', function() {
       var post;
