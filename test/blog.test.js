@@ -113,7 +113,63 @@ describe('Blog', function() {
         });
         done();
       });
-    }); // should yield entries in YYYY-MM-DD-slug format with UTC timezone
+    }); // should yield entries named with slug format in UTC timezone
+    
+    it('should yield entries named with slug format in Los Angeles timezone', function(done) {
+      var blog = new Blog('test/fixtures/slug', 'America/Los_Angeles');
+      
+      blog.entries(function(err, entries) {
+        if (err) { return done(err); }
+        
+        /*
+        expect(entries).to.deep.equal([ {
+          slug: 'hello',
+          publishedAt: new Date('2017-09-03T00:00:00.000Z'),
+          path: '2017-09-03-hello.md'
+        }, {
+          slug: 'hello-again',
+          publishedAt: new Date('2017-09-04T00:00:00.000Z'),
+          path: '2017-09-04-hello-again.md'
+        }, {
+          slug: 'published',
+          publishedAt: new Date('2018-04-26T20:09:27.000Z'),
+          path: '2018-04-22-published.md'
+        } ]);
+        */
+        expect(entries[0].publishedAt).to.be.an.instanceof(Date);
+        delete entries[0].publishedAt;
+        expect(entries[0]).to.deep.equal({
+          slug: 'hello',
+          path: 'hello.md'
+        });
+        expect(entries[1]).to.deep.equal({
+          slug: 'published-in-local',
+          publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+          path: 'published-in-local.md'
+        });
+        expect(entries[2]).to.deep.equal({
+          slug: 'published-in-nyc',
+          publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+          path: 'published-in-nyc.md'
+        });
+        expect(entries[3]).to.deep.equal({
+          slug: 'published-in-nz',
+          publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+          path: 'published-in-nz.md'
+        });
+        expect(entries[4]).to.deep.equal({
+          slug: 'published-in-sf',
+          publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+          path: 'published-in-sf.md'
+        });
+        expect(entries[5]).to.deep.equal({
+          slug: 'published-in-utc',
+          publishedAt: new Date('2018-09-23T20:09:27.000Z'),
+          path: 'published-in-utc.md'
+        });
+        done();
+      });
+    }); // should yield entries named with slug format in Los Angeles timezone
     
   });
   
@@ -172,63 +228,6 @@ describe('Blog', function() {
     }); // a post containing metadata from the sample in the RSS 2.0 Specification
     
   }); // #find
-  
-  describe('with files named by slug', function() {
-    
-    describe('in Los Angeles timezone', function() {
-      var db = new Blog('test/fixtures/slug', 'America/Los_Angeles');
-  
-      describe('#list', function() {
-        var posts;
-    
-        before(function(done) {
-          db.entries(function(err, p) {
-            if (err) { return done(err); }
-            posts = p;
-            return done();
-          });
-        });
-    
-        it('should queue pages', function() {
-          expect(posts).to.have.length(6);
-
-          expect(posts[0].publishedAt).to.be.an.instanceof(Date);
-          delete posts[0].publishedAt;
-          expect(posts[0]).to.deep.equal({
-            slug: 'hello',
-            path: 'hello.md'
-          });
-          expect(posts[1]).to.deep.equal({
-            slug: 'published-in-local',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
-            path: 'published-in-local.md'
-          });
-          expect(posts[2]).to.deep.equal({
-            slug: 'published-in-nyc',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
-            path: 'published-in-nyc.md'
-          });
-          expect(posts[3]).to.deep.equal({
-            slug: 'published-in-nz',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
-            path: 'published-in-nz.md'
-          });
-          expect(posts[4]).to.deep.equal({
-            slug: 'published-in-sf',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
-            path: 'published-in-sf.md'
-          });
-          expect(posts[5]).to.deep.equal({
-            slug: 'published-in-utc',
-            publishedAt: new Date('2018-09-23T20:09:27.000Z'),
-            path: 'published-in-utc.md'
-          });
-        }); 
-      }); // #list
-  
-    }); // in Los Angeles timezone
-  
-  }); // with files named by slug
   
   describe('with files named by date and slug', function() {
     
