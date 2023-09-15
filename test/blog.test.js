@@ -220,11 +220,36 @@ describe('Blog', function() {
   }); // #entries
   
   describe('#entry', function() {
+    
+    it.skip('should yield entry named with YYYY-MM-DD-slug format', function(done) {
+      var blog = new Blog('test/date');
+      
+      blog.entry({ year: '2017', month: '09', day: '04', slug: 'hello-again' }, function(err, entry) {
+        if (err) { return done(err); }
+        
+        expect(entry).to.deep.equal({
+          title: 'Atom draft-07 snapshot',
+          author: {
+            email: 'f8dy@example.com',
+            name: 'Mark Pilgrim',
+            url: 'http://example.org/'
+          },
+          contributors: [
+            { name: 'Sam Ruby' },
+            { name: 'Joe Gregorio' }
+          ],
+          publishedAt: new Date('2003-12-13T12:29:29.000Z'),
+          updatedAt: new Date('2005-07-31T12:29:29.000Z'),
+          content: '_Update: The Atom draft is finished._\n'
+        });
+        done();
+      });
+    });
   
     // A more extensive, single-entry Atom Feed Document:
     // https://datatracker.ietf.org/doc/html/rfc4287#section-1.1
-    it('should yield an entry containing data from the more extensive, single-entry example in RFC 4287', function(done) {
-      var blog = new Blog('test/fixtures');
+    it('should yield entry containing data from the more extensive, single-entry example in RFC 4287', function(done) {
+      var blog = new Blog('test/fixtures/examples');
       
       blog.entry({ slug: 'atom-extensive-example' }, function(err, entry) {
         if (err) { return done(err); }
@@ -246,12 +271,12 @@ describe('Blog', function() {
         });
         done();
       });
-    }); // should yield an entry containing data from the more extensive, single-entry example in RFC 4287
+    }); // should yield entry containing data from the more extensive, single-entry example in RFC 4287
     
     // RSS 2.0-formatted Paged Feed
     // https://datatracker.ietf.org/doc/html/rfc5005#appendix-B
-    it('should yield an entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005', function(done) {
-      var blog = new Blog('test/fixtures');
+    it('should yield entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005', function(done) {
+      var blog = new Blog('test/fixtures/examples');
       
       blog.entry({ slug: 'rss-sample' }, function(err, entry) {
         if (err) { return done(err); }
@@ -263,7 +288,7 @@ describe('Blog', function() {
         });
         done();
       });
-    }); // should yield an entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005
+    }); // should yield entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005
   
   }); // #entry
   
