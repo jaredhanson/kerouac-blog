@@ -19,7 +19,6 @@ describe('handlers/post', function() {
     
     chai.kerouac.page(factory(blog))
       .request(function(page) {
-        //page.site = site;
         page.params = { slug: 'hello' };
       })
       .finish(function(p, l) {
@@ -32,9 +31,10 @@ describe('handlers/post', function() {
           day: undefined
         });
         
-        
         expect(this).to.render('blog/post')
           .and.beginWith.content('This post was written using Markdown.').of.format('md');
+        
+        expect(this.isPost).to.be.true;
         
         //page = this;
         //layout = l;
@@ -92,12 +92,6 @@ describe('handlers/post', function() {
           year: undefined,
           month: undefined,
           day: undefined
-        });
-      });
-      
-      it('should set meta', function() {
-        expect(page.meta).to.deep.equal({
-          post: true,
         });
       });
       
