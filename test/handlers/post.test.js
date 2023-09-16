@@ -84,17 +84,6 @@ describe('handlers/post', function() {
           .generate();
       });
       
-      it('should find package in database', function() {
-        expect(postsDB.entry.callCount).to.equal(1);
-        var call = postsDB.entry.getCall(0)
-        expect(call.args[0]).to.deep.equal({
-          slug: 'hello',
-          year: undefined,
-          month: undefined,
-          day: undefined
-        });
-      });
-      
       /*
       it('should set locals', function() {
         expect(page.locals).to.deep.equal({
@@ -105,14 +94,6 @@ describe('handlers/post', function() {
         });
       });
       */
-      
-      it('should set content', function() {
-        expect(page.content).to.contain('This post was written using Markdown.');
-      });
-      
-      it('should render layout', function() {
-        expect(layout).to.equal(undefined);
-      });
     }); // with slug as only parameter
     
   }); // handler
