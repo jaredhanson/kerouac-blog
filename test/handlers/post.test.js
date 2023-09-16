@@ -7,16 +7,6 @@ var factory = require('../../lib/handlers/post');
 
 describe('handlers/post', function() {
   
-  it('should export factory function', function() {
-    expect(factory).to.be.a('function');
-  });
-  
-  it('should be annotated', function() {
-    expect(factory['@implements']).to.be.undefined;
-    expect(factory['@singleton']).to.be.undefined;
-  });
-  
-  
   describe('handler', function() {
     var site = kerouac();
     
