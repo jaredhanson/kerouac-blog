@@ -265,9 +265,20 @@ describe('Blog', function() {
             { name: 'Sam Ruby' },
             { name: 'Joe Gregorio' }
           ],
+          front: {
+            title: 'Atom draft-07 snapshot',
+            author: 'Mark Pilgrim <f8dy@example.com> (http://example.org/)',
+            contributors: [
+              'Sam Ruby',
+              'Joe Gregorio'
+            ],
+            published: new Date('2003-12-13T12:29:29.000Z'),
+            updated: new Date('2005-07-31T12:29:29.000Z')
+          },
+          content: '_Update: The Atom draft is finished._\n',
+          format: 'md',
           publishedAt: new Date('2003-12-13T12:29:29.000Z'),
-          updatedAt: new Date('2005-07-31T12:29:29.000Z'),
-          content: '_Update: The Atom draft is finished._\n'
+          updatedAt: new Date('2005-07-31T12:29:29.000Z')
         });
         done();
       });
@@ -283,8 +294,13 @@ describe('Blog', function() {
         
         expect(entry).to.deep.equal({
           title: 'Star City',
-          publishedAt: new Date('2003-06-03T09:39:21.000Z'),
-          content: "How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's [Star City](http://howe.iki.rssi.ru/GCTC/gctc_e.htm).\n"
+          front: {
+            title: 'Star City',
+            published: 'Tue, 03 Jun 2003 09:39:21 GMT'
+          },
+          content: "How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's [Star City](http://howe.iki.rssi.ru/GCTC/gctc_e.htm).\n",
+          format: 'md',
+          publishedAt: new Date('2003-06-03T09:39:21.000Z')
         });
         done();
       });
