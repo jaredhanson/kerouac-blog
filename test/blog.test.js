@@ -238,9 +238,9 @@ describe('Blog', function() {
             { name: 'Sam Ruby' },
             { name: 'Joe Gregorio' }
           ],
+          content: '_Update: The Atom draft is finished._\n',
           publishedAt: new Date('2003-12-13T12:29:29.000Z'),
           updatedAt: new Date('2005-07-31T12:29:29.000Z'),
-          content: '_Update: The Atom draft is finished._\n'
         });
         done();
       });
