@@ -4,7 +4,6 @@ var kerouac = require('kerouac');
 var factory = require('../../lib/handlers/post');
 
 
-
 describe('handlers/post', function() {
   
   it('should render post', function(done) {

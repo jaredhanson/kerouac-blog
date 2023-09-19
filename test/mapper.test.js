@@ -15,7 +15,8 @@ describe('Mapper', function() {
         expect(this).to.request([
           '/2017/09/03/hello.html',
           '/2017/09/04/hello-again.html',
-          '/2018/04/26/published.html'
+          '/2018/04/26/published.html',
+          '/feed.atom'
         ]);
         done();
       })
