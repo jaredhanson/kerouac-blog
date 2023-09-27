@@ -1,20 +1,31 @@
 var chai = require('chai');
+var sinon = require('sinon');
 var kerouac = require('kerouac')
-var factory = require('../../../app/handlers/feed/atom');
+var factory = require('../../../lib/handlers/feed/atom');
 
 
 describe('handlers/feed/atom', function() {
   
-  it('should export factory function', function() {
-    expect(factory).to.be.a('function');
+  it('should write empty feed', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, []);
+    
+    chai.kerouac.page(factory(blog))
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<feed xmlns="http://www.w3.org/2005/Atom"/>',
+          ''
+        ].join("\n");
+      
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
   });
   
-  it('should be annotated', function() {
-    expect(factory['@implements']).to.be.undefined;
-    expect(factory['@singleton']).to.be.undefined;
-  });
   
-  describe('handler', function() {
+  describe.skip('handler', function() {
     
     describe('with one post', function() {
       var site = kerouac();

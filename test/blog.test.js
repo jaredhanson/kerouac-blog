@@ -6,10 +6,6 @@ var Blog = require('../lib/blog');
 
 describe('Blog', function() {
   
-  it('should export constructor', function() {
-    expect(Blog).to.be.a('function');
-  });
-  
   describe('#entries', function() {
     
     it('should yield entries named with YYYY-MM-DD-slug format in UTC timezone', function(done) {
