@@ -11,10 +11,15 @@ describe('handlers/feed/atom', function() {
     blog.entries = sinon.stub().yields(null, []);
     
     chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.fullURL = 'http://example.org/feed.atom';
+      })
       .finish(function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
-          '<feed xmlns="http://www.w3.org/2005/Atom"/>',
+          '<feed xmlns="http://www.w3.org/2005/Atom">',
+          '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
+          '</feed>',
           ''
         ].join("\n");
       
@@ -37,14 +42,61 @@ describe('handlers/feed/atom', function() {
     
     chai.kerouac.page(factory(blog))
       .request(function(page) {
-        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>')
+        page.fullURL = 'http://example.org/feed.atom';
+        
+        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
       })
-    
       .finish(function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
-          //'  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
+          '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
+          '  <entry>',
+          '    <id/>',
+          //'    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
+          '    <title>Hello, World</title>',
+          //'    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
+          '    <published>2003-12-13T18:30:02Z</published>',
+          '    <content type="html">&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;</content>',
+          '  </entry>',
+          '</feed>',
+          ''
+        ].join("\n");
+      
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  });
+  
+  // A more extensive, single-entry Atom Feed Document:
+  // https://datatracker.ietf.org/doc/html/rfc4287#section-1.1
+  it('should write more extensive example', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, [ {
+      slug: 'hello',
+    } ]);
+    blog.entry = sinon.stub().yields(null, {
+      slug: 'hello',
+      title: 'Hello, World',
+      publishedAt: new Date('2003-12-13T18:30:02Z')
+    });
+    
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.app = new Object();
+        page.app.get = sinon.stub();
+        page.app.get.withArgs('title').returns('Example Feed');
+        
+        page.fullURL = 'http://example.org/feed.atom';
+        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
+      })
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
+          '  <title>Example Feed</title>',
+          '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
           '  <entry>',
           '    <id/>',
           //'    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
