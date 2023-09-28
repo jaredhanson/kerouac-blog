@@ -1,5 +1,18 @@
 var uri = require('url');
 
+exports.linkify = function(slug, publishedAt) {
+  var date = publishedAt.toISOString();
+  
+  // TODO: respect time zone
+  return [
+    date.substring(0,4),
+    date.substring(5,7),
+    date.substring(8,10),
+    slug, ''
+  ].join('/');
+}
+
+
 exports.linkto = function(target, context) {
   return target.canonicalURL || target.fullURL || target.absoluteURL;
 }

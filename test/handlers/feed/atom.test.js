@@ -32,17 +32,17 @@ describe('handlers/feed/atom', function() {
   it('should write single entry feed', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
-      slug: 'hello',
+      slug: 'hello-world',
     } ]);
     blog.entry = sinon.stub().yields(null, {
-      slug: 'hello',
+      slug: 'hello-world',
       title: 'Hello, World',
       publishedAt: new Date('2003-12-13T18:30:02Z')
     });
     
     chai.kerouac.page(factory(blog))
       .request(function(page) {
-        page.fullURL = 'http://example.org/feed.atom';
+        page.fullURL = 'http://www.example.com/blog/feed.atom';
         
         page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
       })
@@ -50,12 +50,12 @@ describe('handlers/feed/atom', function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
-          '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
+          '  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
           '  <entry>',
           '    <id/>',
           //'    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
           '    <title>Hello, World</title>',
-          //'    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
+          '    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
           '    <content type="html">&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;</content>',
           '  </entry>',
@@ -74,10 +74,10 @@ describe('handlers/feed/atom', function() {
   it('should write more extensive example', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
-      slug: 'hello',
+      slug: 'hello-world',
     } ]);
     blog.entry = sinon.stub().yields(null, {
-      slug: 'hello',
+      slug: 'hello-world',
       title: 'Hello, World',
       publishedAt: new Date('2003-12-13T18:30:02Z')
     });
@@ -101,7 +101,7 @@ describe('handlers/feed/atom', function() {
           '    <id/>',
           //'    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
           '    <title>Hello, World</title>',
-          //'    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
+          '    <link href=\"http://example.org/2003/12/13/hello-world/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
           '    <content type="html">&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;</content>',
           '  </entry>',

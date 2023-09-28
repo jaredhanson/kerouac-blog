@@ -224,6 +224,7 @@ describe('Blog', function() {
         if (err) { return done(err); }
         
         expect(entry).to.deep.equal({
+          slug: 'hello-again',
           title: 'Atom draft-07 snapshot',
           author: {
             email: 'f8dy@example.com',
@@ -251,6 +252,7 @@ describe('Blog', function() {
         if (err) { return done(err); }
         
         expect(entry).to.deep.equal({
+          slug: 'atom-extensive-example',
           title: 'Atom draft-07 snapshot',
           author: {
             email: 'f8dy@example.com',
@@ -289,6 +291,7 @@ describe('Blog', function() {
         if (err) { return done(err); }
         
         expect(entry).to.deep.equal({
+          slug: 'rss-sample',
           title: 'Star City',
           front: {
             title: 'Star City',
