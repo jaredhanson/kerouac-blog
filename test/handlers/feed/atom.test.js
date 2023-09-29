@@ -37,6 +37,8 @@ describe('handlers/feed/atom', function() {
     blog.entry = sinon.stub().yields(null, {
       slug: 'hello-world',
       title: 'Hello, World',
+      content: 'Hello, world! How are you today?',
+      format: 'md',
       publishedAt: new Date('2003-12-13T18:30:02Z')
     });
     
@@ -44,6 +46,7 @@ describe('handlers/feed/atom', function() {
       .request(function(page) {
         page.fullURL = 'http://www.example.com/blog/feed.atom';
         
+        // TODO: clean this up and assert arguments
         page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
       })
       .finish(function() {
@@ -52,8 +55,7 @@ describe('handlers/feed/atom', function() {
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
           '  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
           '  <entry>',
-          '    <id/>',
-          //'    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
+          '    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
           '    <title>Hello, World</title>',
           '    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
@@ -98,8 +100,7 @@ describe('handlers/feed/atom', function() {
           '  <title>Example Feed</title>',
           '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
           '  <entry>',
-          '    <id/>',
-          //'    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
+          '    <id>http://example.org/2003/12/13/hello-world/</id>',
           '    <title>Hello, World</title>',
           '    <link href=\"http://example.org/2003/12/13/hello-world/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
@@ -117,55 +118,6 @@ describe('handlers/feed/atom', function() {
   
   
   describe.skip('handler', function() {
-    
-    describe('with one post', function() {
-      var site = kerouac();
-      var page, err;
-
-      before(function(done) {
-        chai.kerouac.page(factory())
-          .request(function(page) {
-            page.canonicalURL = 'http://www.example.com/blog/feed.atom';
-            
-            page.site = site;
-            page.site.pages = [
-              { url: '/2003/12/13/hello-world/',
-                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
-                meta: { post: true },
-                locals: {
-                  title: 'Hello, World',
-                  publishedAt: new Date('2003-12-13T18:30:02Z'),
-                },
-                content: 'Hello, world! How are you today?'
-              }
-            ];
-          })
-          .finish(function() {
-            page = this;
-            done();
-          })
-          .generate();
-      });
-  
-      it('should write feed', function() {
-        var expected = [
-          '<?xml version="1.0" encoding="UTF-8"?>',
-          '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
-          '  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
-          '  <entry>',
-          '    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
-          '    <title>Hello, World</title>',
-          '    <link href=\"http://www.example.com/blog/2003/12/13/hello-world/\"/>',
-          '    <published>2003-12-13T18:30:02Z</published>',
-          '    <content type="html">&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;</content>',
-          '  </entry>',
-          '</feed>',
-          ''
-        ].join("\n");
-      
-        expect(page.body).to.equal(expected);
-      });
-    }); // with one post
   
     describe('generating a feed with the extensive, single-entry example in RFC 4287', function() {
       // https://tools.ietf.org/html/rfc4287#section-1.1
