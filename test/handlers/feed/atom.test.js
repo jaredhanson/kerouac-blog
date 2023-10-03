@@ -18,6 +18,7 @@ describe('handlers/feed/atom', function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<feed xmlns="http://www.w3.org/2005/Atom">',
+          '  <link rel="alternate" type="text/html" href="http://example.org/"/>',
           '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
           '</feed>',
           ''
@@ -53,6 +54,7 @@ describe('handlers/feed/atom', function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
+          '  <link rel="alternate" type="text/html" href="http://www.example.com/blog/"/>',
           '  <link rel="self" type="application/atom+xml" href="http://www.example.com/blog/feed.atom"/>',
           '  <entry>',
           '    <id>http://www.example.com/blog/2003/12/13/hello-world/</id>',
@@ -73,7 +75,7 @@ describe('handlers/feed/atom', function() {
   
   // A more extensive, single-entry Atom Feed Document:
   // https://datatracker.ietf.org/doc/html/rfc4287#section-1.1
-  it('should write more extensive example', function(done) {
+  it('should write feed containing data from the more extensive, single-entry example in RFC 4287', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
       slug: 'hello-world',
@@ -88,16 +90,21 @@ describe('handlers/feed/atom', function() {
       .request(function(page) {
         page.app = new Object();
         page.app.get = sinon.stub();
-        page.app.get.withArgs('title').returns('Example Feed');
+        page.app.get.withArgs('title').returns('dive into mark');
+        page.app.get.withArgs('description').returns('A lot of effort went into making this effortless');
         
         page.fullURL = 'http://example.org/feed.atom';
+        
+        // TODO: clean this up and assert arguments
         page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
       })
       .finish(function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
-          '  <title>Example Feed</title>',
+          '  <title>dive into mark</title>',
+          '  <subtitle>A lot of effort went into making this effortless</subtitle>',
+          '  <link rel="alternate" type="text/html" href="http://example.org/"/>',
           '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
           '  <entry>',
           '    <id>http://example.org/2003/12/13/hello-world/</id>',
@@ -109,6 +116,9 @@ describe('handlers/feed/atom', function() {
           '</feed>',
           ''
         ].join("\n");
+      
+        // TODO: make an option to put IDs in an alternate formate, like the example:
+        // tag:example.org,2003:3.2397
       
         expect(this.body).to.equal(expected);
         done();
