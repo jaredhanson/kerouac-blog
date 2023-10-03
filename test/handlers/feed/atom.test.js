@@ -78,12 +78,22 @@ describe('handlers/feed/atom', function() {
   it('should write feed containing data from the more extensive, single-entry example in RFC 4287', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
-      slug: 'hello-world',
+      slug: 'atom',
     } ]);
     blog.entry = sinon.stub().yields(null, {
-      slug: 'hello-world',
-      title: 'Hello, World',
-      publishedAt: new Date('2003-12-13T18:30:02Z')
+      slug: 'atom',
+      title: 'Atom draft-07 snapshot',
+      author: {
+        email: 'f8dy@example.com',
+        name: 'Mark Pilgrim',
+        url: 'http://example.org/'
+      },
+      contributors: [
+        { name: 'Sam Ruby' },
+        { name: 'Joe Gregorio' }
+      ],
+      publishedAt: new Date('2003-12-13T18:30:02Z'),
+      updatedAt: new Date('2005-07-31T12:29:29.000Z')
     });
     
     chai.kerouac.page(factory(blog))
@@ -96,7 +106,7 @@ describe('handlers/feed/atom', function() {
         page.fullURL = 'http://example.org/feed.atom';
         
         // TODO: clean this up and assert arguments
-        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
+        page.compile = sinon.stub().yields(null, '<p><em>Update: The Atom draft is finished.</em></p>');
       })
       .finish(function() {
         var expected = [
@@ -107,91 +117,9 @@ describe('handlers/feed/atom', function() {
           '  <link rel="alternate" type="text/html" href="http://example.org/"/>',
           '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
           '  <entry>',
-          '    <id>http://example.org/2003/12/13/hello-world/</id>',
-          '    <title>Hello, World</title>',
-          '    <link href=\"http://example.org/2003/12/13/hello-world/\"/>',
-          '    <published>2003-12-13T18:30:02Z</published>',
-          '    <content type="html">&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;</content>',
-          '  </entry>',
-          '</feed>',
-          ''
-        ].join("\n");
-      
-        // TODO: make an option to put IDs in an alternate formate, like the example:
-        // tag:example.org,2003:3.2397
-      
-        expect(this.body).to.equal(expected);
-        done();
-      })
-      .generate();
-  });
-  
-  
-  describe.skip('handler', function() {
-  
-    describe('generating a feed with the extensive, single-entry example in RFC 4287', function() {
-      // https://tools.ietf.org/html/rfc4287#section-1.1
-      
-      var site = kerouac();
-      site.set('title', 'dive into mark');
-      site.set('description', 'A lot of effort went into making this effortless');
-      
-      var page, err;
-
-      before(function(done) {
-        chai.kerouac.page(factory())
-          .request(function(page) {
-            page.canonicalURL = 'http://example.org/feed.atom';
-            
-            page.site = site;
-            page.site.pages = [
-              { url: '/',
-                canonicalURL: 'http://example.org/',
-                meta: { home: true },
-                locals: {
-                }
-              },
-              { url: '/2005/04/02/atom',
-                canonicalURL: 'http://example.org/2005/04/02/atom',
-                meta: { post: true },
-                locals: {
-                  id: 'tag:example.org,2003:3.2397',
-                  title: 'Atom draft-07 snapshot',
-                  author: {
-                    email: 'f8dy@example.com',
-                    name: 'Mark Pilgrim',
-                    url: 'http://example.org/'
-                  },
-                  contributors: [
-                    { name: 'Sam Ruby' },
-                    { name: 'Joe Gregorio' }
-                  ],
-                  publishedAt: new Date('2003-12-13T18:30:02Z'),
-                  updatedAt: new Date('2005-07-31T12:29:29.000Z'),
-                },
-                content: '_Update: The Atom draft is finished._\n'
-              }
-            ];
-          })
-          .finish(function() {
-            page = this;
-            done();
-          })
-          .generate();
-      });
-  
-      it('should write feed', function() {
-        var expected = [
-          '<?xml version="1.0" encoding="UTF-8"?>',
-          '<feed xmlns=\"http://www.w3.org/2005/Atom\">',
-          '  <title>dive into mark</title>',
-          '  <subtitle>A lot of effort went into making this effortless</subtitle>',
-          '  <link rel="alternate" type="text/html" href="http://example.org/"/>',
-          '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
-          '  <entry>',
-          '    <id>tag:example.org,2003:3.2397</id>',
+          '    <id>http://example.org/2003/12/13/atom/</id>',
           '    <title>Atom draft-07 snapshot</title>',
-          '    <link href=\"http://example.org/2005/04/02/atom\"/>',
+          '    <link href=\"http://example.org/2003/12/13/atom/\"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
           '    <updated>2005-07-31T12:29:29Z</updated>',
           '    <author>',
@@ -211,10 +139,13 @@ describe('handlers/feed/atom', function() {
           ''
         ].join("\n");
       
-        expect(page.body).to.equal(expected);
-      });
-    }); // generating a feed with the extensive, single-entry example in RFC 4287
-    
-  }); // handler
+        // TODO: make an option to put IDs in an alternate formate, like the example:
+        // tag:example.org,2003:3.2397
+      
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  });
   
 });
