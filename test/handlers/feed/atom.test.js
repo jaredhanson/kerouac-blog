@@ -81,6 +81,7 @@ describe('handlers/feed/atom', function() {
       slug: 'atom',
     } ]);
     blog.entry = sinon.stub().yields(null, {
+      id: 'tag:example.org,2003:3.2397',
       slug: 'atom',
       title: 'Atom draft-07 snapshot',
       author: {
@@ -93,7 +94,8 @@ describe('handlers/feed/atom', function() {
         { name: 'Joe Gregorio' }
       ],
       publishedAt: new Date('2003-12-13T18:30:02Z'),
-      updatedAt: new Date('2005-07-31T12:29:29.000Z')
+      updatedAt: new Date('2005-07-31T12:29:29.000Z'),
+      permanentURL: 'http://example.org/2005/04/02/atom'
     });
     
     chai.kerouac.page(factory(blog))
@@ -117,9 +119,9 @@ describe('handlers/feed/atom', function() {
           '  <link rel="alternate" type="text/html" href="http://example.org/"/>',
           '  <link rel="self" type="application/atom+xml" href="http://example.org/feed.atom"/>',
           '  <entry>',
-          '    <id>http://example.org/2003/12/13/atom/</id>',
+          '    <id>tag:example.org,2003:3.2397</id>',
           '    <title>Atom draft-07 snapshot</title>',
-          '    <link href=\"http://example.org/2003/12/13/atom/\"/>',
+          '    <link href="http://example.org/2005/04/02/atom"/>',
           '    <published>2003-12-13T18:30:02Z</published>',
           '    <updated>2005-07-31T12:29:29Z</updated>',
           '    <author>',
@@ -138,9 +140,6 @@ describe('handlers/feed/atom', function() {
           '</feed>',
           ''
         ].join("\n");
-      
-        // TODO: make an option to put IDs in an alternate formate, like the example:
-        // tag:example.org,2003:3.2397
       
         expect(this.body).to.equal(expected);
         done();
