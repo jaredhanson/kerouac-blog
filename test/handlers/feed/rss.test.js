@@ -75,8 +75,56 @@ describe('handlers/feed/rss', function() {
       .generate();
   });
   
-  it.skip('should write feed matching the RSS 2.0-formatted sample in RSS 2.0 specification', function(done) {
+  // RSS 2.0-formatted sample file:
+  // https://cyber.harvard.edu/rss/rss.html#sampleFiles
+  // https://cyber.harvard.edu/rss/examples/rss2sample.xml
+  it('should write feed matching the RSS 2.0-formatted sample in RSS 2.0 specification', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, [ {
+      slug: 'atom',
+    } ]);
+    blog.entry = sinon.stub().yields(null, {
+      slug: 'news-starcity',
+      title: 'Star City',
+      publishedAt: new Date('2003-12-13T18:30:02Z')
+    });
     
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.app = new Object();
+        page.app.get = sinon.stub();
+        page.app.get.withArgs('title').returns('Liftoff News');
+        page.app.get.withArgs('description').returns('Liftoff to Space Exploration.');
+        
+        page.fullURL = 'http://liftoff.msfc.nasa.gov/feed.rss';
+      
+        // TODO: clean this up and assert arguments
+        page.compile = sinon.stub().yields(null, '<p>How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia&#39;s <a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm">Star City</a>.</p>');
+      })
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<rss version=\"2.0\">',
+          '  <channel>',
+          '    <title>Liftoff News</title>',
+          '    <description>Liftoff to Space Exploration.</description>',
+          '    <link>http://liftoff.msfc.nasa.gov/</link>',
+          '    <item>',
+          '      <guid isPermaLink="true">http://www.example.com/blog/2003/12/13/hello-world/</guid>',
+          '      <title>Star City</title>',
+          '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
+          '      <description>&lt;p&gt;How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia&amp;#39;s &lt;a href=&quot;http://howe.iki.rssi.ru/GCTC/gctc_e.htm&quot;&gt;Star City&lt;/a&gt;.&lt;/p&gt;</description>',
+          '    </item>',
+          '  </channel>',
+          '</rss>',
+          ''
+        ].join("\n");
+    
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
   }); // should write feed matching the RSS 2.0-formatted sample in RSS 2.0 specification
   
   
