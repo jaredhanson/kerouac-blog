@@ -1,9 +1,32 @@
 var chai = require('chai');
+var sinon = require('sinon');
 var kerouac = require('kerouac')
 var factory = require('../../../lib/handlers/feed/rss');
 
 
 describe('handlers/feed/rss', function() {
+  
+  it('should write empty feed', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, []);
+    
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.fullURL = 'http://example.org/feed.rss';
+      })
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<rss version=\"2.0\"/>',
+          ''
+        ].join("\n");
+      
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  });
+  
   
   describe.skip('handler', function() {
   
