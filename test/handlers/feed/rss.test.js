@@ -1,6 +1,6 @@
 var chai = require('chai');
 var kerouac = require('kerouac')
-var factory = require('../../../app/handlers/feed/rss');
+var factory = require('../../../lib/handlers/feed/rss');
 
 
 describe('handlers/feed/rss', function() {
