@@ -129,61 +129,42 @@ describe('handlers/feed/rss', function() {
       .generate();
   }); // should write feed matching the RSS 2.0-formatted sample in RSS 2.0 specification
   
-  
-  describe.skip('handler', function() {
+  it('should write feed equivalent to the more extensive, single-entry example in RFC 4287', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, [ {
+      slug: 'atom',
+    } ]);
+    blog.entry = sinon.stub().yields(null, {
+      id: 'tag:example.org,2003:3.2397',
+      slug: 'atom',
+      title: 'Atom draft-07 snapshot',
+      author: {
+        email: 'f8dy@example.com',
+        name: 'Mark Pilgrim',
+        url: 'http://example.org/'
+      },
+      contributors: [
+        { name: 'Sam Ruby' },
+        { name: 'Joe Gregorio' }
+      ],
+      publishedAt: new Date('2003-12-13T18:30:02Z'),
+      updatedAt: new Date('2005-07-31T12:29:29.000Z'),
+      permanentURL: 'http://example.org/2005/04/02/atom'
+    });
     
-    describe('generating a equivalent to the extensive, single-entry example in RFC 4287', function() {
-      // https://tools.ietf.org/html/rfc4287#section-1.1
-      
-      var site = kerouac();
-      site.set('title', 'dive into mark');
-      site.set('description', 'A lot of effort went into making this effortless');
-      
-      var page, err;
-
-      before(function(done) {
-        chai.kerouac.page(factory())
-          .request(function(page) {
-            page.canonicalURL = 'http://example.org/feed.rss';
-            
-            page.site = site;
-            page.site.pages = [
-              { url: '/',
-                canonicalURL: 'http://example.org/',
-                meta: { home: true },
-                locals: {
-                }
-              },
-              { url: '/2005/04/02/atom',
-                canonicalURL: 'http://example.org/2005/04/02/atom',
-                meta: { post: true },
-                locals: {
-                  id: 'tag:example.org,2003:3.2397',
-                  title: 'Atom draft-07 snapshot',
-                  author: {
-                    email: 'f8dy@example.com',
-                    name: 'Mark Pilgrim',
-                    url: 'http://example.org/'
-                  },
-                  contributors: [
-                    { name: 'Sam Ruby' },
-                    { name: 'Joe Gregorio' }
-                  ],
-                  publishedAt: new Date('2003-12-13T18:30:02Z'),
-                  updatedAt: new Date('2005-07-31T12:29:29.000Z')
-                },
-                content: '_Update: The Atom draft is finished._\n'
-              }
-            ];
-          })
-          .finish(function() {
-            page = this;
-            done();
-          })
-          .generate();
-      });
-  
-      it('should write feed', function() {
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.app = new Object();
+        page.app.get = sinon.stub();
+        page.app.get.withArgs('title').returns('dive into mark');
+        page.app.get.withArgs('description').returns('A lot of effort went into making this effortless');
+        
+        page.fullURL = 'http://example.org/feed.atom';
+        
+        // TODO: clean this up and assert arguments
+        page.compile = sinon.stub().yields(null, '<p><em>Update: The Atom draft is finished.</em></p>');
+      })
+      .finish(function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<rss version=\"2.0\">',
@@ -203,11 +184,11 @@ describe('handlers/feed/rss', function() {
           '</rss>',
           ''
         ].join("\n");
-      
-        expect(page.body).to.equal(expected);
-      });
-    }); // generating a equivalent to the extensive, single-entry example in RFC 4287
-    
-  }); // handler
+        
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  }); // should write feed equivalent to the more extensive, single-entry example in RFC 4287
   
 });
