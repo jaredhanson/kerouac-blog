@@ -1,73 +1,65 @@
 var chai = require('chai');
-var kerouac = require('kerouac')
+var sinon = require('sinon');
+var kerouac = require('kerouac');
 var factory = require('../../lib/handlers/index');
 
 
 describe('handlers/index', function() {
   
-  it('should export factory function', function() {
-    expect(factory).to.be.a('function');
-  });
-  
-  it('should be annotated', function() {
-    expect(factory['@implements']).to.be.undefined;
-    expect(factory['@singleton']).to.be.undefined;
-  });
-  
-  describe('handler', function() {
-    var site = kerouac();
-  
-    describe('with one post', function() {
-      var page, layout, err;
-
-      before(function(done) {
-        chai.kerouac.page(factory())
-          .request(function(page) {
-            page.site = site;
-            page.site.pages = [
-              { url: '/2003/12/13/hello-world/',
-                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
-                meta: { post: true },
-                locals: {
-                  title: 'Hello, World',
-                  publishedAt: new Date('2003-12-13T18:30:02Z'),
-                  modifiedAt: new Date('2005-07-31T12:29:29Z')
-                }
-              }
-            ];
-          })
-          .finish(function(p, l) {
-            page = this;
-            layout = l;
-            done();
-          })
-          .generate();
-      });
-      
-      it('should set meta', function() {
-        expect(page.meta).to.deep.equal({
-          home: true,
-        });
-      });
-      
-      /*
-      it('should set locals', function() {
-        expect(page.locals).to.deep.equal({
-          posts: [{
-            title: 'Hello, World',
-            publishedAt: new Date('2003-12-13T18:30:02Z'),
-            modifiedAt: new Date('2005-07-31T12:29:29Z')
-          }],
-          content: undefined
-        });
-      });
-      */
-  
-      it('should render layout', function() {
-        expect(layout).to.equal(undefined);
-      });
-    }); // with one post
+  it('should render index', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, [ {
+      slug: 'hello-world',
+    } ]);
+    blog.entry = sinon.stub().yields(null, {
+      slug: 'hello-world',
+      title: 'Hello, World',
+      content: 'Hello, world! How are you today?',
+      format: 'md',
+      publishedAt: new Date('2003-12-13T18:30:02Z')
+    });
     
-  }); // handler
+    
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        // TODO: clean this up and assert arguments
+        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
+      })
+      .finish(function() {
+        // TODO: what is it rendering???
+        //expect(this).to.render('blog/post')
+      
+      
+        expect(this.locals).to.deep.equal({
+          entries: [ {
+            slug: 'hello-world',
+            title: 'Hello, World',
+            content: '<p>Hello, world! How are you today?</p>',
+            format: 'html',
+            publishedAt: new Date('2003-12-13T18:30:02Z')
+          } ]
+        });
+      
+        console.log(this.locals);
+      
+      
+        /*
+        expect(blog.entry.callCount).to.equal(1);
+        var call = blog.entry.getCall(0)
+        expect(call.args[0]).to.deep.equal({
+          slug: 'hello',
+          year: undefined,
+          month: undefined,
+          day: undefined
+        });
+      
+        expect(this).to.render('blog/post')
+          .and.beginWith.content('This post was written using Markdown.').of.format('md');
+        });
+        */
+        done();
+      })
+      .generate();
+  });
   
 });

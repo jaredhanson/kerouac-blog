@@ -1,6 +1,5 @@
 var chai = require('chai');
 var sinon = require('sinon');
-var kerouac = require('kerouac')
 var factory = require('../../../lib/handlers/feed/rss');
 
 
