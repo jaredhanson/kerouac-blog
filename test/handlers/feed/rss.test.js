@@ -58,7 +58,7 @@ describe('handlers/feed/rss', function() {
           '  <channel>',
           '    <link>http://www.example.com/blog/</link>',
           '    <item>',
-          '      <guid isPermaLink="true">http://www.example.com/blog/2003/12/13/hello-world/</guid>',
+          '      <guid>http://www.example.com/blog/2003/12/13/hello-world/</guid>',
           '      <title>Hello, World</title>',
           '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
           '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
@@ -81,12 +81,14 @@ describe('handlers/feed/rss', function() {
   it('should write feed matching the RSS 2.0-formatted sample in RSS 2.0 specification', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
-      slug: 'atom',
+      slug: 'news-starcity',
     } ]);
     blog.entry = sinon.stub().yields(null, {
+      id: 'http://liftoff.msfc.nasa.gov/2003/06/03.html#item573',
       slug: 'news-starcity',
       title: 'Star City',
-      publishedAt: new Date('2003-12-13T18:30:02Z')
+      publishedAt: new Date('2003-12-13T18:30:02Z'),
+      permanentURL: 'http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp'
     });
     
     chai.kerouac.page(factory(blog))
@@ -110,9 +112,9 @@ describe('handlers/feed/rss', function() {
           '    <description>Liftoff to Space Exploration.</description>',
           '    <link>http://liftoff.msfc.nasa.gov/</link>',
           '    <item>',
-          '      <guid isPermaLink="true">http://www.example.com/blog/2003/12/13/hello-world/</guid>',
+          '      <guid>http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</guid>',
           '      <title>Star City</title>',
-          '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '      <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp</link>',
           '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
           '      <description>&lt;p&gt;How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia&amp;#39;s &lt;a href=&quot;http://howe.iki.rssi.ru/GCTC/gctc_e.htm&quot;&gt;Star City&lt;/a&gt;.&lt;/p&gt;</description>',
           '    </item>',
@@ -129,71 +131,6 @@ describe('handlers/feed/rss', function() {
   
   
   describe.skip('handler', function() {
-    
-    describe('generating a feed with the sample from RSS 2.0 Specification', function() {
-      // https://cyber.harvard.edu/rss/examples/rss2sample.xml
-      
-      var site = kerouac();
-      site.set('title', 'Liftoff News');
-      site.set('description', 'Liftoff to Space Exploration.');
-      
-      var page, err;
-
-      before(function(done) {
-        chai.kerouac.page(factory())
-          .request(function(page) {
-            page.canonicalURL = 'http://www.example.com/blog/feed.rss';
-            
-            page.site = site;
-            page.site.pages = [
-              { url: '/',
-                canonicalURL: 'http://liftoff.msfc.nasa.gov/',
-                meta: { home: true },
-                locals: {
-                }
-              },
-              { url: '/news/2003/news-starcity.asp',
-                canonicalURL: 'http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp',
-                meta: { post: true },
-                locals: {
-                  id: 'http://liftoff.msfc.nasa.gov/2003/06/03.html#item573',
-                  title: 'Star City',
-                  publishedAt: new Date('2003-06-03T09:39:21.000Z'),
-                },
-                content: "How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's [Star City](http://howe.iki.rssi.ru/GCTC/gctc_e.htm).\n"
-              }
-            ];
-          })
-          .finish(function() {
-            page = this;
-            done();
-          })
-          .generate();
-      });
-  
-      it('should write feed', function() {
-        var expected = [
-          '<?xml version="1.0" encoding="UTF-8"?>',
-          '<rss version=\"2.0\">',
-          '  <channel>',
-          '    <title>Liftoff News</title>',
-          '    <description>Liftoff to Space Exploration.</description>',
-          '    <link>http://liftoff.msfc.nasa.gov/</link>',
-          '    <item>',
-          '      <guid isPermaLink="false">http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</guid>',
-          '      <title>Star City</title>',
-          '      <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp</link>',
-          '      <pubDate>Tue, 03 Jun 2003 09:39:21 GMT</pubDate>',
-          '      <description>&lt;p&gt;How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia&amp;#39;s &lt;a href=&quot;http://howe.iki.rssi.ru/GCTC/gctc_e.htm&quot;&gt;Star City&lt;/a&gt;.&lt;/p&gt;</description>',
-          '    </item>',
-          '  </channel>',
-          '</rss>',
-          ''
-        ].join("\n");
-      
-        expect(page.body).to.equal(expected);
-      });
-    }); // generating a feed with the sample from RSS 2.0 Specification
     
     describe('generating a equivalent to the extensive, single-entry example in RFC 4287', function() {
       // https://tools.ietf.org/html/rfc4287#section-1.1
