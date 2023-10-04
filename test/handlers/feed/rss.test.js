@@ -47,6 +47,9 @@ describe('handlers/feed/rss', function() {
     chai.kerouac.page(factory(blog))
       .request(function(page) {
         page.fullURL = 'http://www.example.com/blog/feed.rss';
+        
+        // TODO: clean this up and assert arguments
+        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
       })
       .finish(function() {
         var expected = [
@@ -59,6 +62,7 @@ describe('handlers/feed/rss', function() {
           '      <title>Hello, World</title>',
           '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
           '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
+          '      <description>&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;</description>',
           '    </item>',
           '  </channel>',
           '</rss>',
@@ -73,57 +77,6 @@ describe('handlers/feed/rss', function() {
   
   
   describe.skip('handler', function() {
-  
-    describe('with one post', function() {
-      var site = kerouac();
-      
-      var page, err;
-
-      before(function(done) {
-        chai.kerouac.page(factory())
-          .request(function(page) {
-            page.canonicalURL = 'http://www.example.com/blog/feed.rss';
-            
-            page.site = site;
-            page.site.pages = [
-              { url: '/2003/12/13/hello-world/',
-                canonicalURL: 'http://www.example.com/blog/2003/12/13/hello-world/',
-                meta: { post: true },
-                locals: {
-                  title: 'Hello, World',
-                  publishedAt: new Date('2003-12-13T18:30:02Z'),
-                },
-                content: 'Hello, world! How are you today?'
-              }
-            ];
-          })
-          .finish(function() {
-            page = this;
-            done();
-          })
-          .generate();
-      });
-  
-      it('should write feed', function() {
-        var expected = [
-          '<?xml version="1.0" encoding="UTF-8"?>',
-          '<rss version=\"2.0\">',
-          '  <channel>',
-          '    <item>',
-          '      <guid isPermaLink="true">http://www.example.com/blog/2003/12/13/hello-world/</guid>',
-          '      <title>Hello, World</title>',
-          '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
-          '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
-          '      <description>&lt;p&gt;Hello, world! How are you today?&lt;/p&gt;</description>',
-          '    </item>',
-          '  </channel>',
-          '</rss>',
-          ''
-        ].join("\n");
-      
-        expect(page.body).to.equal(expected);
-      });
-    }); // with one post
     
     describe('generating a feed with the sample from RSS 2.0 Specification', function() {
       // https://cyber.harvard.edu/rss/examples/rss2sample.xml
