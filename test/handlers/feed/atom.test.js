@@ -73,9 +73,9 @@ describe('handlers/feed/atom', function() {
       .generate();
   });
   
-  // A more extensive, single-entry Atom Feed Document:
+  // A more extensive, single-entry Atom feed document:
   // https://datatracker.ietf.org/doc/html/rfc4287#section-1.1
-  it('should write feed containing data from the more extensive, single-entry example in RFC 4287', function(done) {
+  it('should write feed matching the more extensive, single-entry example in RFC 4287', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
       slug: 'atom',
@@ -146,6 +146,6 @@ describe('handlers/feed/atom', function() {
         done();
       })
       .generate();
-  });
+  }); // should write feed with the more extensive, single-entry example in RFC 4287
   
 });

@@ -75,6 +75,10 @@ describe('handlers/feed/rss', function() {
       .generate();
   });
   
+  it.skip('should write feed matching the RSS 2.0-formatted sample in RSS 2.0 specification', function(done) {
+    
+  }); // should write feed matching the RSS 2.0-formatted sample in RSS 2.0 specification
+  
   
   describe.skip('handler', function() {
     

@@ -243,7 +243,7 @@ describe('Blog', function() {
       });
     });
   
-    // A more extensive, single-entry Atom Feed Document:
+    // A more extensive, single-entry Atom feed document:
     // https://datatracker.ietf.org/doc/html/rfc4287#section-1.1
     it('should yield entry containing data from the more extensive, single-entry example in RFC 4287', function(done) {
       var blog = new Blog('test/fixtures/examples');
@@ -282,9 +282,10 @@ describe('Blog', function() {
       });
     }); // should yield entry containing data from the more extensive, single-entry example in RFC 4287
     
-    // RSS 2.0-formatted Paged Feed
-    // https://datatracker.ietf.org/doc/html/rfc5005#appendix-B
-    it('should yield entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005', function(done) {
+    // RSS 2.0-formatted sample file:
+    // https://cyber.harvard.edu/rss/rss.html#sampleFiles
+    // https://cyber.harvard.edu/rss/examples/rss2sample.xml
+    it('should yield entry containing data from the RSS 2.0-formatted sample in RSS 2.0 specification', function(done) {
       var blog = new Blog('test/fixtures/examples');
       
       blog.entry({ slug: 'rss-sample' }, function(err, entry) {
@@ -303,7 +304,7 @@ describe('Blog', function() {
         });
         done();
       });
-    }); // should yield entry containing data from the more RSS 2.0-formatted paged feed example in RFC 5005
+    }); // should yield entry containing data from the RSS 2.0-formatted sample in RSS 2.0 specification
   
   }); // #entry
   
