@@ -1,9 +1,9 @@
 var chai = require('chai');
 var kerouac = require('kerouac')
-var factory = require('../../app/handlers/feed');
+var factory = require('../../lib/handlers/index');
 
 
-describe('handlers/feed', function() {
+describe('handlers/index', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
