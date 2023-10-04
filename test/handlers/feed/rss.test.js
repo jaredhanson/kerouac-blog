@@ -17,10 +17,14 @@ describe('handlers/feed/rss', function() {
       .finish(function() {
         var expected = [
           '<?xml version="1.0" encoding="UTF-8"?>',
-          '<rss version=\"2.0\"/>',
+          '<rss version=\"2.0\">',
+          '  <channel>',
+          '    <link>http://example.org/</link>',
+          '  </channel>',
+          '</rss>',
           ''
         ].join("\n");
-      
+        
         expect(this.body).to.equal(expected);
         done();
       })
