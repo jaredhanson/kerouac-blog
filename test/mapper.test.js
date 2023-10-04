@@ -16,7 +16,8 @@ describe('Mapper', function() {
           '/2017/09/03/hello.html',
           '/2017/09/04/hello-again.html',
           '/2018/04/26/published.html',
-          '/feed.atom'
+          '/feed.atom',
+          '/index.html'
         ]);
         done();
       })
