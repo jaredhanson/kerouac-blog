@@ -31,6 +31,46 @@ describe('handlers/feed/rss', function() {
       .generate();
   });
   
+  it('should write single entry feed', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, [ {
+      slug: 'hello-world',
+    } ]);
+    blog.entry = sinon.stub().yields(null, {
+      slug: 'hello-world',
+      title: 'Hello, World',
+      content: 'Hello, world! How are you today?',
+      format: 'md',
+      publishedAt: new Date('2003-12-13T18:30:02Z')
+    });
+    
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.fullURL = 'http://www.example.com/blog/feed.rss';
+      })
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<rss version=\"2.0\">',
+          '  <channel>',
+          '    <link>http://www.example.com/blog/</link>',
+          '    <item>',
+          '      <guid isPermaLink="true">http://www.example.com/blog/2003/12/13/hello-world/</guid>',
+          '      <title>Hello, World</title>',
+          '      <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '      <pubDate>Sat, 13 Dec 2003 18:30:02 GMT</pubDate>',
+          '    </item>',
+          '  </channel>',
+          '</rss>',
+          ''
+        ].join("\n");
+      
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  });
+  
   
   describe.skip('handler', function() {
   
