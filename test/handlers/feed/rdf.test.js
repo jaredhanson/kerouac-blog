@@ -1,9 +1,33 @@
 var chai = require('chai');
+var sinon = require('sinon');
 var kerouac = require('kerouac')
 var factory = require('../../../lib/handlers/feed/rdf');
 
 
 describe('handlers/feed/rdf', function() {
+  
+  it('should write empty feed', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, []);
+    
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.fullURL = 'http://example.org/feed.rdf';
+      })
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+          '  <channel rdf:about="http://example.org/feed.rdf"/>',
+          '</rdf:RDF>',
+          ''
+        ].join("\n");
+        
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  });
   
   describe.skip('handler', function() {
   
