@@ -29,6 +29,53 @@ describe('handlers/feed/rdf', function() {
       .generate();
   });
   
+  it('should write single entry feed', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, [ {
+      slug: 'hello-world',
+    } ]);
+    blog.entry = sinon.stub().yields(null, {
+      slug: 'hello-world',
+      title: 'Hello, World',
+      content: 'Hello, world! How are you today?',
+      format: 'md',
+      publishedAt: new Date('2003-12-13T18:30:02Z')
+    });
+    
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.fullURL = 'http://www.example.com/blog/feed.rdf';
+        
+        // TODO: clean this up and assert arguments
+        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
+      })
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+          '  <channel rdf:about="http://www.example.com/blog/feed.rdf">',
+          '    <items>',
+          '      <rdf:Seq>',
+          '        <rdf:li resource="http://www.example.com/blog/2003/12/13/hello-world/"/>',
+          '      </rdf:Seq>',
+          '    </items>',
+          '  </channel>',
+          '  <item rdf:about="http://www.example.com/blog/2003/12/13/hello-world/">',
+          '    <title>Hello, World</title>',
+          '    <link>http://www.example.com/blog/2003/12/13/hello-world/</link>',
+          '    <dc:date>2003-12-13T18:30:02Z</dc:date>',
+          '  </item>',
+          '</rdf:RDF>',
+          ''
+        ].join("\n");
+      
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  });
+  
+  
   describe.skip('handler', function() {
   
     describe('with one post', function() {
