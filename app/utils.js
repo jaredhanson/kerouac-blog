@@ -1,5 +1,6 @@
 var uri = require('url');
 
+// TODO: clean this up
 exports.linkify = function(slug, publishedAt) {
   var date = publishedAt.toISOString();
   
@@ -13,6 +14,7 @@ exports.linkify = function(slug, publishedAt) {
 }
 
 
+// TODO: Remove this
 exports.linkto = function(target, context) {
   return target.canonicalURL || target.fullURL || target.absoluteURL;
 }
