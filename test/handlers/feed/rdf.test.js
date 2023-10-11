@@ -79,7 +79,7 @@ describe('handlers/feed/rdf', function() {
   it('should write feed matching the RSS 2.0-formatted sample in RSS 1.0 Specification', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
-      slug: 'hello-world',
+      slug: 'xslt',
     } ]);
     blog.entry = sinon.stub().yields(null, {
       slug: 'xslt',
