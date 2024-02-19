@@ -1,6 +1,6 @@
 {
   "name": "kerouac-blog",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Kerouac app that generates a blog section of a site.",
   "keywords": [
     "blog",
