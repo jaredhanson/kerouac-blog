@@ -76,7 +76,7 @@ describe('handlers/feed/rdf', function() {
   });
   
   // http://web.resource.org/rss/1.0/spec#s4.1
-  it('should write feed matching the RSS 2.0-formatted sample in RSS 1.0 Specification', function(done) {
+  it('should write feed matching the basic sample RSS 1.0 document in RSS 1.0 Specification', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
       slug: 'xslt',
@@ -108,6 +108,59 @@ describe('handlers/feed/rdf', function() {
           '    <description>XML.com features a rich mix of information and services for the XML community.</description>',
           // TODO: put this back in
           //'    <link>http://xml.com/pub</link>',
+          '    <items>',
+          '      <rdf:Seq>',
+          '        <rdf:li resource="http://xml.com/pub/2000/08/09/xslt/xslt.html"/>',
+          '      </rdf:Seq>',
+          '    </items>',
+          '  </channel>',
+          '  <item rdf:about="http://xml.com/pub/2000/08/09/xslt/xslt.html">',
+          '    <title>Processing Inclusions with XSLT</title>',
+          '    <link>http://xml.com/pub/2000/08/09/xslt/xslt.html</link>',
+          '  </item>',
+          '</rdf:RDF>',
+          ''
+        ].join("\n");
+      
+        expect(this.body).to.equal(expected);
+        done();
+      })
+      .generate();
+  });
+  
+  // https://web.resource.org/rss/1.0/spec#s7
+  it('should write feed matching the RSS 1.0 document pulling in elements from various modules in RSS 1.0 Specification', function(done) {
+    var blog = new Object();
+    blog.entries = sinon.stub().yields(null, [ {
+      slug: 'xslt',
+    } ]);
+    blog.entry = sinon.stub().yields(null, {
+      slug: 'xslt',
+      title: 'Processing Inclusions with XSLT',
+      permanentURL: 'http://xml.com/pub/2000/08/09/xslt/xslt.html'
+    });
+    
+    chai.kerouac.page(factory(blog))
+      .request(function(page) {
+        page.app = new Object();
+        page.app.get = sinon.stub();
+        page.app.get.withArgs('title').returns('Meerkat');
+        page.app.get.withArgs('description').returns('Meerkat: An Open Wire Service');
+        
+        page.fullURL = 'http://meerkat.oreillynet.com/?_fl=rss1.0';
+        
+        // TODO: clean this up and assert arguments
+        page.compile = sinon.stub().yields(null, '<p>Hello, world! How are you today?</p>');
+      })
+      .finish(function() {
+        var expected = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+          '  <channel rdf:about="http://meerkat.oreillynet.com/?_fl=rss1.0">',
+          '    <title>Meerkat</title>',
+          '    <description>Meerkat: An Open Wire Service</description>',
+          // TODO:
+          //'    <link>http://meerkat.oreillynet.com</link>',
           '    <items>',
           '      <rdf:Seq>',
           '        <rdf:li resource="http://xml.com/pub/2000/08/09/xslt/xslt.html"/>',

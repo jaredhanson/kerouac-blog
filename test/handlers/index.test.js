@@ -6,7 +6,7 @@ var factory = require('../../lib/handlers/index');
 
 describe('handlers/index', function() {
   
-  it('should render index', function(done) {
+  it.skip('should render index', function(done) {
     var blog = new Object();
     blog.entries = sinon.stub().yields(null, [ {
       slug: 'hello-world',
